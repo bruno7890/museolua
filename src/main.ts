@@ -394,6 +394,12 @@ function main(): void {
       createMedia: (s) => (s.type === "video" ? createVideoHandle(s, BASE, shared) : createAudioHandle(s, BASE)),
     });
 
+    // Un solo punto para la ampliación: la clase CSS y la etiqueta del botón van juntas.
+    const setVideoExpanded = (on: boolean) => {
+      shared.element.classList.toggle("dialog__video--expanded", on);
+      el<HTMLButtonElement>("station-expand").textContent = on ? "Reducir" : "Ampliar";
+    };
+
     panel = createStationPanel(el("station-dialog"), {
       baseUrl: BASE,
       videoElement: shared.element,
@@ -409,13 +415,13 @@ function main(): void {
         }
         // Sin pantalla completa, la ampliación es solo visual (clase CSS).
         if (v.classList.contains("dialog__video--expanded")) {
-          v.classList.remove("dialog__video--expanded");
+          setVideoExpanded(false);
           return;
         }
         if (v.requestFullscreen) {
-          void v.requestFullscreen().catch(() => v.classList.add("dialog__video--expanded"));
+          void v.requestFullscreen().catch(() => setVideoExpanded(true));
         } else {
-          v.classList.add("dialog__video--expanded");
+          setVideoExpanded(true);
         }
       },
       onClose: closePanel,
@@ -424,7 +430,7 @@ function main(): void {
     // Salir de pantalla completa por el sistema (Atrás, Esc, botón del navegador) debe
     // quitar la ampliación; si no, el vídeo queda tapando el diálogo.
     document.addEventListener("fullscreenchange", () => {
-      shared.element.classList.toggle("dialog__video--expanded", document.fullscreenElement === shared.element);
+      setVideoExpanded(document.fullscreenElement === shared.element);
     });
 
     coordinator.subscribe((s) => {

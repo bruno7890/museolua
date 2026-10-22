@@ -6,7 +6,7 @@ import type { Station } from "../content/types.ts";
 import type { SessionStore } from "../app/session-store.ts";
 import type { SpeechFailReason } from "./speech-controller.ts";
 
-export type PlaybackPhase = "idle" | "narrating" | "ready" | "playing" | "paused" | "error";
+export type PlaybackPhase = "idle" | "narrating" | "ready" | "loading" | "playing" | "paused" | "error";
 
 export interface SpeechHandlers {
   onStart?: () => void;
@@ -162,14 +162,15 @@ export function createPlaybackCoordinator(deps: CoordinatorDeps): PlaybackCoordi
     phase = "narrating";
     emit();
     deps.speech.speakText(text, {
+      // Solo actúan mientras se narra: un evento tardío no debe pisar la carga o la reproducción.
       onEnd: () => {
-        if (t !== token) return;
+        if (t !== token || phase !== "narrating") return;
         markPresented(station.id);
         phase = "ready";
         emit();
       },
       onFail: () => {
-        if (t !== token) return;
+        if (t !== token || phase !== "narrating") return;
         phase = "ready";
         errorMessage = MSG_TEXT_ONLY;
         emit();
@@ -217,6 +218,7 @@ export function createPlaybackCoordinator(deps: CoordinatorDeps): PlaybackCoordi
       const station = active();
       if (!station) return;
       if (phase === "narrating") return; // Play se deshabilita durante la narración
+      if (phase === "loading") return; // ya se está cargando: no se repite play()
 
       const handle = getMedia(station);
       if (phase === "playing") {
@@ -229,6 +231,8 @@ export function createPlaybackCoordinator(deps: CoordinatorDeps): PlaybackCoordi
       const t = token;
       deps.speech.cancel(); // nunca voz y medio a la vez
       playPending = true;
+      phase = "loading";
+      emit();
       try {
         await handle.play();
       } catch {

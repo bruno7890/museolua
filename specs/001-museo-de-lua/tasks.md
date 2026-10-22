@@ -218,12 +218,12 @@
 | Paso | Resultado real |
 |---|---|
 | `npm run typecheck` | Código 0 |
-| `npm test` | 120 pruebas, 16 suites, todas pasan |
+| `npm test` | 123 pruebas, 16 suites, todas pasan |
 | `npm run validate:content` | `✓ Contenido válido (modo demo).` |
 | `npm run build` | 34 archivos; `index.js` 570,61 kB (147,76 kB gzip), `index.css` 5,94 kB |
-| `npm run check:budget` | Carga esencial 661,2 KiB ≤ 5 MiB; medios 2,00 MiB |
-| `npm run test:e2e` | 42/42 (21 escritorio + 21 móvil emulado) |
-| `npm run test:e2e:subdir` | 21/21 en `/museo-de-lua/` |
+| `npm run check:budget` | Carga esencial 662 KiB ≤ 5 MiB; medios 2,00 MiB |
+| `npm run test:e2e` | 44/44 (22 escritorio + 22 móvil emulado) |
+| `npm run test:e2e:subdir` | 22/22 en `/museo-de-lua/` |
 | `npm run validate:content -- --mode=publish` | Falla a propósito: 16 marcadores, código 1 |
 
 ---

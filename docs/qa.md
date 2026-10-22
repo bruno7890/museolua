@@ -7,14 +7,14 @@ Registro de qué está verificado y qué queda pendiente. Actualiza esta tabla e
 | Comprobación | Comando | Resultado |
 |---|---|---|
 | Tipos | `npm run typecheck` | Correcto |
-| Unitarias | `npm test` | 120 pruebas, 16 suites, todas pasan |
+| Unitarias | `npm test` | 123 pruebas, 16 suites, todas pasan |
 | Contenido (demo) | `npm run validate:content` | Correcto |
 | Contenido (publicación) | `npm run validate:content -- --mode=publish` | **Falla a propósito**: quedan marcadores `placeholder: true` |
 | Build | `npm run build` | Correcto: 571 kB de JS (148 kB gzip), 5,9 kB de CSS, 34 archivos |
-| Presupuesto | `npm run check:budget` | Carga esencial 661 KiB ≤ 5 MiB; medios 2,00 MiB |
-| E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 21/21 |
-| E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 21/21 |
-| E2E en subdirectorio | `npm run test:e2e:subdir` | 21/21 |
+| Presupuesto | `npm run check:budget` | Carga esencial 662 KiB ≤ 5 MiB; medios 2,00 MiB |
+| E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 22/22 |
+| E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 22/22 |
+| E2E en subdirectorio | `npm run test:e2e:subdir` | 22/22 |
 
 La batería completa que exige la constitución es:
 
@@ -26,7 +26,7 @@ npm run typecheck && npm test && npm run validate:content && npm run build && np
 
 | Medición | Valor | Cómo se obtuvo |
 |---|---|---|
-| Carga esencial sin medios | 661 KiB (148 KiB solo JS) | `npm run check:budget` |
+| Carga esencial sin medios | 662 KiB (148 KiB solo JS) | `npm run check:budget` |
 | Build completo con medios de demostración | 2,64 MiB (34 archivos) | `npm run check:budget` |
 | Archivos más pesados | `assets/index-*.js` 555 KiB, `media/video/04.mp4` 644 KiB | `npm run check:budget` |
 | Memoria de texturas | No medida | Requiere un dispositivo Android real; pendiente |
@@ -59,8 +59,8 @@ y reproducción de vídeo en red móvil.
 
 | Dispositivo | Navegador | Resultado | Notas |
 |---|---|---|---|
-| Escritorio 1280×720 | Chromium 141 (Playwright) | Automático, 21/21 | Representado por el proyecto `chromium-desktop` |
-| Móvil emulado 412×915 (Pixel 7) | Chromium 141 (Playwright) | Automático, 21/21 | No es hardware real: no valida multitáctil real ni pantalla completa |
+| Escritorio 1280×720 | Chromium 141 (Playwright) | Automático, 22/22 | Representado por el proyecto `chromium-desktop` |
+| Móvil emulado 412×915 (Pixel 7) | Chromium 141 (Playwright) | Automático, 22/22 | No es hardware real: no valida multitáctil real ni pantalla completa |
 | Android físico (Chrome) | — | **Pendiente** | Falta el dispositivo |
 | iOS / Safari | — | **Pendiente** | Sin probar |
 
@@ -111,3 +111,6 @@ Revisión estática y con lector de pantalla simulado:
 | 2026-10-21 | Al abrir el sitio por la IP de la red local desde el móvil, la comprobación de la clave fallaba: `crypto.subtle` no existe fuera de un contexto seguro y la entrada se quedaba bloqueada en «Comprobando la clave…» | Respaldo de SHA-256 en TypeScript para contextos no seguros; además, la entrada nunca se deja bloqueada sin explicación (ver `EC-12`) |
 | 2026-10-21 | En horizontal en el móvil la barra ocupaba casi media pantalla, el joystick tapaba la ayuda y, en la pantalla de entrada, el botón «Entrar al museo» quedaba fuera de la pantalla | Barra de una línea (botones de 44 px, título oculto), joystick en la esquina, ayuda a su derecha; en horizontal la entrada usa dos columnas (clave a la derecha) y `viewport-fit=cover` con zonas seguras | `tests/e2e/landscape.spec.ts` (740×360: barra ≤ 90 px, botones dentro de la pantalla en una fila, entrada sin desplazamiento, sin solape joystick-ayuda); captura comprobada |
 | 2026-10-22 | Al ampliar un vídeo y salir de pantalla completa con el sistema (Atrás, Esc o el botón del navegador), el vídeo seguía a pantalla completa tapando el diálogo: solo se veía el vídeo, sin botones | La clase de ampliación no seguía al estado real de pantalla completa | `ampliar` usa la API del navegador y un listener de `fullscreenchange` quita la ampliación al salir; sin API, ampliación solo visual | `tests/e2e/video-expand.spec.ts` (sale de pantalla completa por API y comprueba que el diálogo y sus botones vuelven a verse); reproducido antes del arreglo |
+| 2026-10-22 | Al pulsar Reproducir en el móvil no había ninguna señal mientras el audio cargaba; el botón parecía no responder | El estado no distinguía «cargando» de «listo» | Nueva fase `loading`: el botón muestra «Cargando…», se deshabilita y el estado dice «Cargando el audio…» | `tests/unit/playback-coordinator.test.ts`, `tests/e2e/play-loading.spec.ts` |
+| 2026-10-22 | Una narración que terminaba o fallaba tarde podía devolver a «listo» un audio que cargaba o ya sonaba | Los callbacks de la voz no comprobaban la fase actual | `onEnd`/`onFail` actúan solo si la fase es `narrating` | `tests/unit/playback-coordinator.test.ts` (eventos tardíos) |
+| 2026-10-22 | El botón «Ampliar» no indicaba que el vídeo estaba ampliado | Sin etiqueta de estado | El botón dice «Reducir» mientras el vídeo está ampliado; un único punto (`setVideoExpanded`) controla clase y etiqueta | `tests/e2e/video-expand.spec.ts` |

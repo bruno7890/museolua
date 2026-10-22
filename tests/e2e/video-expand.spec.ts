@@ -24,6 +24,7 @@ test.describe("ampliar vídeo", () => {
     await ampliar.click();
     // Si el navegador admite pantalla completa, entra; si no, la ampliación es solo visual.
     const enPantallaCompleta = await page.evaluate(() => document.fullscreenElement !== null);
+    await expect(page.getByRole("button", { name: "Reducir" })).toBeVisible();
     if (enPantallaCompleta) {
       // Salida que hace el sistema (Esc, Atrás o el botón de salir), sin pasar por la app.
       await page.evaluate(() => document.exitFullscreen());

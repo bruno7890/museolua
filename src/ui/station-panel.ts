@@ -27,6 +27,7 @@ const PHASE_LABEL: Record<PlaybackSnapshot["phase"], string> = {
   idle: "",
   narrating: "Escuchando la introducción…",
   ready: "Listo para escuchar o reproducir.",
+  loading: "Cargando el audio…",
   playing: "Reproduciendo.",
   paused: "En pausa.",
   error: "Hubo un problema con el archivo.",
@@ -138,8 +139,10 @@ export function createStationPanel(root: HTMLElement, opts: StationPanelOptions)
       if (!current) return;
       const narrating = snapshot.phase === "narrating";
       status.textContent = PHASE_LABEL[snapshot.phase];
-      playBtn.disabled = narrating;
-      playBtn.textContent = snapshot.phase === "playing" ? "Pausar" : "Reproducir";
+      const loading = snapshot.phase === "loading";
+      playBtn.disabled = narrating || loading;
+      playBtn.textContent = snapshot.phase === "playing" ? "Pausar" : loading ? "Cargando…" : "Reproducir";
+      playBtn.setAttribute("aria-busy", String(loading));
       replayBtn.disabled = false;
       muteBtn.textContent = snapshot.muted ? "Activar sonido" : "Silenciar";
       muteBtn.setAttribute("aria-pressed", String(snapshot.muted));

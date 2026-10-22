@@ -183,9 +183,43 @@ describe("PlaybackCoordinator: reproducción", () => {
     const { coord, media } = setup();
     coord.select(A, { fromGesture: true });
     const pending = coord.togglePlay();
-    expect(coord.state.phase).toBe("ready");
+    expect(coord.state.phase).toBe("loading");
     await pending;
     expect(media.get(A)!.playing).toBe(true);
+    expect(coord.state.phase).toBe("playing");
+  });
+
+  it("una narración que termina mientras el audio carga no cambia la fase de carga", async () => {
+    const { coord, media, speech } = setup();
+    coord.select(A, { fromGesture: true });
+    coord.playIntroduction();
+    speech.utterances[0]!.handlers.onEnd(); // narración terminada: fase ready
+    const pending = coord.togglePlay();
+    expect(coord.state.phase).toBe("loading");
+    speech.utterances[0]!.handlers.onFail("timeout"); // evento tardío de la narración
+    expect(coord.state.phase).toBe("loading");
+    await pending;
+    expect(media.get(A)!.playing).toBe(true);
+    expect(coord.state.phase).toBe("playing");
+  });
+
+  it("una narración tardía no devuelve a «listo» un audio que ya suena", async () => {
+    const { coord, speech } = setup();
+    coord.select(A, { fromGesture: true });
+    coord.playIntroduction();
+    speech.utterances[0]!.handlers.onEnd();
+    await coord.togglePlay();
+    speech.utterances[0]!.handlers.onEnd(); // evento duplicado o tardío
+    expect(coord.state.phase).toBe("playing");
+  });
+
+  it("mientras el audio carga, una segunda pulsación de Play no vuelve a llamar a play()", async () => {
+    const { coord, media } = setup();
+    coord.select(A, { fromGesture: true });
+    const primera = coord.togglePlay();
+    const segunda = coord.togglePlay();
+    await Promise.all([primera, segunda]);
+    expect(media.get(A)!.play).toHaveBeenCalledTimes(1);
     expect(coord.state.phase).toBe("playing");
   });
 

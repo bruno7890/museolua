@@ -33,6 +33,28 @@ npm run typecheck && npm test && npm run validate:content && npm run build && np
 
 Los medios se piden bajo demanda: la visita no descarga ningún audio ni vídeo hasta que la visitante lo reproduce.
 
+## Revisar en el teléfono
+
+El build se sirve en la red local para comprobarlo en un móvil real:
+
+```bash
+npm run build
+npm run preview -- --host --port 4173     # en la red local
+ipconfig                                   # IPv4 de la tarjeta Wi-Fi
+```
+
+Abre `http://<IPv4>:4173/` en el móvil, con la **misma red Wi-Fi**, y entra con la clave
+de demostración (`lua`). Si el navegador del móvil no conecta, es el cortafuegos de
+Windows: permite Node.js en redes privadas. Para desarrollo con recarga en caliente,
+`npm run dev -- --host` sirve el código sin compilar.
+
+Con el móvil conectado por USB (Android), `adb reverse tcp:4173 tcp:4173` permite
+usar `http://localhost:4173/` sin depender del Wi-Fi.
+
+Es la vía para cerrar los puntos que quedan pendientes en Android: voz del sistema en
+español, multitáctil real, pantalla completa real, FPS sostenidos, rotación de pantalla
+y reproducción de vídeo en red móvil.
+
 ## Dispositivos
 
 | Dispositivo | Navegador | Resultado | Notas |

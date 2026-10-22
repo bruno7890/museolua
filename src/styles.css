@@ -104,7 +104,7 @@ body {
   position: fixed;
   inset: 0;
   display: grid;
-  place-items: center;
+  overflow-y: auto; /* en horizontal la tarjeta puede ser más alta que la pantalla */
   padding: 24px;
   background:
     radial-gradient(circle at 20% 15%, rgba(199, 181, 232, 0.55), transparent 45%),
@@ -118,6 +118,7 @@ body {
   pointer-events: none;
 }
 .gate__card {
+  margin: auto; /* centra sin recortar la parte superior cuando hay scroll */
   width: min(440px, 100%);
   display: grid;
   gap: 14px;
@@ -201,7 +202,7 @@ body {
   gap: 8px;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
+  padding: calc(10px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) 10px calc(14px + env(safe-area-inset-left));
   background: rgba(248, 245, 252, 0.9);
   border-bottom: 2px solid var(--salmon);
   z-index: 10;
@@ -447,5 +448,68 @@ body {
     width: 116px;
     height: 116px;
     bottom: 110px;
+  }
+}
+
+/* ---------- Teléfono en horizontal ----------
+   Poca altura (≈360 px): la barra baja a una sola línea de botones de 44 px, el título
+   se oculta para ganar espacio, el joystick se pega a la esquina y el texto de ayuda
+   ocupa el resto a su derecha, sin taparse. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .gate {
+    padding: 8px 16px;
+  }
+  .gate__card {
+    gap: 8px;
+    padding: 14px 20px;
+  }
+  .gate__ornament {
+    width: 56px;
+    height: 56px;
+  }
+  .gate__title {
+    font-size: 1.5rem;
+  }
+  .museum__bar {
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: calc(6px + env(safe-area-inset-top)) calc(8px + env(safe-area-inset-right)) 6px calc(8px + env(safe-area-inset-left));
+  }
+  .museum__title {
+    display: none;
+  }
+  .museum__controls {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .museum__controls .btn {
+    min-height: 44px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  .museum__quality {
+    font-size: 0.85rem;
+  }
+  .museum__quality select {
+    min-height: 44px;
+  }
+  .stick {
+    width: 104px;
+    height: 104px;
+    left: calc(10px + env(safe-area-inset-left));
+    bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+  .stick__knob {
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 -24px;
+  }
+  .museum__help {
+    left: calc(124px + env(safe-area-inset-left));
+    right: calc(10px + env(safe-area-inset-right));
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    max-width: none;
+    padding: 6px 12px;
+    font-size: 0.9rem;
   }
 }

@@ -221,9 +221,9 @@
 | `npm test` | 120 pruebas, 16 suites, todas pasan |
 | `npm run validate:content` | `✓ Contenido válido (modo demo).` |
 | `npm run build` | 34 archivos; `index.js` 570,61 kB (147,76 kB gzip), `index.css` 5,94 kB |
-| `npm run check:budget` | Carga esencial 659,7 KiB ≤ 5 MiB; medios 2,00 MiB |
-| `npm run test:e2e` | 34/34 (17 escritorio + 17 móvil emulado) |
-| `npm run test:e2e:subdir` | 17/17 en `/museo-de-lua/` |
+| `npm run check:budget` | Carga esencial 661,2 KiB ≤ 5 MiB; medios 2,00 MiB |
+| `npm run test:e2e` | 40/40 (20 escritorio + 20 móvil emulado) |
+| `npm run test:e2e:subdir` | 20/20 en `/museo-de-lua/` |
 | `npm run validate:content -- --mode=publish` | Falla a propósito: 16 marcadores, código 1 |
 
 ---
@@ -236,7 +236,7 @@ Cada corrección va con su prueba y su evidencia.
 | Defecto | Causa | Corrección | Evidencia |
 |---|---|---|---|
 | La clave no se comprobaba al abrir el sitio por la IP de la red local (`http://192.168.x.x`): la entrada se quedaba en «Comprobando la clave…» y el botón no se recuperaba | `crypto.subtle` solo existe en contextos seguros (HTTPS o `localhost`) | `src/access/sha256.ts` (SHA-256 propio) como respaldo de `src/access/access-gate.ts`; el manejador de `src/main.ts` recupera el botón y explica el error si algo falla | `tests/unit/sha256.test.ts` (3 vectores contra `node:crypto`), `tests/unit/access-gate.test.ts` (4 casos sin `crypto.subtle`), `tests/e2e/entry.spec.ts` (2 casos con contexto no seguro); comprobado en `http://192.168.1.12:4173/` sin errores de consola |
-| 2026-10-21 | En horizontal en el móvil la barra ocupaba casi media pantalla, el joystick tapaba la ayuda y, en la pantalla de entrada, el botón «Entrar al museo» quedaba fuera de la pantalla | Barra de una línea (botones de 44 px, título oculto), joystick en la esquina, ayuda a su derecha y tarjeta de entrada desplazable; iewport-fit=cover con zonas seguras | 	ests/e2e/landscape.spec.ts (740×360: barra ≤ 90 px, botones dentro de la pantalla en una fila, sin solape joystick-ayuda); captura comprobada |
+| 2026-10-21 | En horizontal en el móvil la barra ocupaba casi media pantalla, el joystick tapaba la ayuda y, en la pantalla de entrada, el botón «Entrar al museo» quedaba fuera de la pantalla | Barra de una línea (botones de 44 px, título oculto), joystick en la esquina, ayuda a su derecha; en horizontal la entrada usa dos columnas (clave a la derecha) y `viewport-fit=cover` con zonas seguras | `tests/e2e/landscape.spec.ts` (740×360: barra ≤ 90 px, botones dentro de la pantalla en una fila, entrada sin desplazamiento, sin solape joystick-ayuda); captura comprobada |
 | Al cerrar el panel de una estación en el modo alternativo 2D, el catálogo quedaba oculto para siempre | El cierre solo restauraba el catálogo cuando había escena 3D | `src/main.ts` (`closePanel`) vuelve a mostrar el catálogo cuando no hay `museum` | `tests/e2e/collection.spec.ts` (recorrido de las diez estaciones en 2D) |
 | Los vídeos no offerían subtítulos y la pista anterior se acumulaba | Faltaba la pista `captions` por estación | Cada estación con vídeo declara su pista; al abrir otra se limpian las pistas | `tests/e2e/station.spec.ts` (prueba de subtítulos) |
 

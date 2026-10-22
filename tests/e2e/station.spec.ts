@@ -27,7 +27,8 @@ test.describe("estación desde el catálogo (mismas reglas que el cuadro)", () =
     await expect(play).toBeEnabled({ timeout: 10_000 });
     expect(await playCalls(page)).toBe(0);
     await play.click();
-    await expect(page.getByRole("button", { name: "Pausar" })).toBeVisible();
+    // `play()` espera a que el audio cargue (preload="none"); con tres navegadores en paralelo puede tardar.
+    await expect(page.getByRole("button", { name: "Pausar" })).toBeVisible({ timeout: 30_000 });
     expect(await playCalls(page)).toBeGreaterThan(0);
   });
 

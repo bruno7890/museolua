@@ -36,6 +36,22 @@ test.describe("horizontal en teléfono", () => {
     expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(2);
   });
 
+  test("la entrada cabe sin desplazarse y «Entrar al museo» es visible", async ({ page }) => {
+    await page.goto("./");
+    await unlock(page);
+    const enter = page.getByRole("button", { name: "Entrar al museo" });
+    await expect(enter).toBeEnabled({ timeout: 30_000 });
+
+    const sinScroll = await page.locator("#gate").evaluate((el) => el.scrollHeight <= el.clientHeight + 1);
+    expect(sinScroll).toBe(true);
+    const caja = await enter.boundingBox();
+    expect(caja).not.toBeNull();
+    expect(caja!.y).toBeGreaterThanOrEqual(0);
+    expect(caja!.y + caja!.height).toBeLessThanOrEqual(360);
+    const clave = await page.getByLabel("Clave").boundingBox();
+    expect(clave!.y + clave!.height).toBeLessThanOrEqual(360);
+  });
+
   test("el joystick no tapa el texto de ayuda", async ({ page }) => {
     await page.goto("./");
     await unlock(page);

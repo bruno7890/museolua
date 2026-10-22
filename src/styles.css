@@ -457,18 +457,55 @@ body {
    ocupa el resto a su derecha, sin taparse. */
 @media (orientation: landscape) and (max-height: 500px) {
   .gate {
-    padding: 8px 16px;
+    padding: 6px 16px;
   }
   .gate__card {
-    gap: 8px;
-    padding: 14px 20px;
+    width: min(720px, 100%);
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+    align-items: center;
+    gap: 6px 24px;
+    padding: 10px 24px;
+  }
+  .gate__card > .btn--enter {
+    min-height: 48px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    justify-self: center;
+  }
+  /* Columna izquierda: marca y textos. Columna derecha: clave y botones. */
+  .gate__ornament,
+  .gate__title,
+  .gate__lead,
+  .gate__status {
+    grid-column: 1;
+  }
+  .gate__form,
+  .gate__error,
+  .gate__card > .btn--enter,
+  .gate__notice {
+    grid-column: 2;
+  }
+  .gate__notice {
+    font-size: 0.8rem;
+    line-height: 1.3;
   }
   .gate__ornament {
     width: 56px;
     height: 56px;
+    justify-self: center;
   }
   .gate__title {
     font-size: 1.5rem;
+  }
+  .gate__form {
+    gap: 6px;
+  }
+  .gate__form input {
+    min-height: 44px;
+  }
+  .gate__form .btn {
+    min-height: 44px;
   }
   .museum__bar {
     flex-wrap: nowrap;

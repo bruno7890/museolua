@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "title": "Museo de Lua",
+  "ornament": {
+    "src": "media/branding/ornament.svg",
+    "alt": "",
+    "placeholder": true
+  },
+  "theme": {
+    "purple": "#C7B5E8",
+    "salmon": "#F2AA9B",
+    "lavender": "#F8F5FC",
+    "plum": "#30263D",
+    "grayWarm": "#D5CFD5"
+  },
+  "entry": {
+    "label": "Entrar al museo",
+    "transitionMs": 1000,
+    "reducedTransitionMs": 150
+  },
+  "access": {
+    "algorithm": "SHA-256",
+    "salt": "museo-de-lua-v1",
+    "verifier": "f62ac158c178909580d11a3a5907d69f41125fef6cabf4e84f580b875bf48598",
+    "informalNotice": "Barrera informal: no protege los archivos publicados."
+  },
+  "speech": {
+    "lang": "es",
+    "fallbackLangs": ["es-EC", "es-419"],
+    "rate": 0.95,
+    "pitch": 1,
+    "volume": 0.7,
+    "startTimeoutMs": 4000,
+    "maxUtteranceMs": 60000,
+    "baseEndTimeoutMs": 2000,
+    "msPerCharacter": 80
+  },
+  "welcome": {
+    "touchText": "Toca un cuadro para acercarte y escuchar su introducción. Puedes mover el recorrido con el joystick de la izquierda y girar arrastrando en la derecha.",
+    "desktopText": "Haz clic en un cuadro para acercarte. Muévete con WASD o las flechas y gira arrastrando con el ratón.",
+    "speechTouch": "Bienvenida al Museo de Lua. Toca un cuadro para acercarte. Usa el joystick para moverte y arrastra para mirar alrededor.",
+    "speechDesktop": "Bienvenida al Museo de Lua. Haz clic en un cuadro para acercarte. Muévete con las flechas y gira arrastrando con el ratón."
+  },
+  "navigation": {
+    "walkSpeed": 60,
+    "lookSensitivity": 0.0035,
+    "approachRate": 6,
+    "approachDistance": 50,
+    "eyeHeight": 0,
+    "fov": 65,
+    "collisionRadius": 12,
+    "pitchLimitDegrees": 35
+  },
+  "quality": {
+    "defaultProfile": "standard"
+  }
+}

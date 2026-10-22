@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "106acf230014cbb43ca34e6410371321b56ca742f9ee0442e8ec05bf02eb0384"
+    },
+    "threejs-fundamentals": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-fundamentals/SKILL.md",
+      "computedHash": "01b18e381a820a257d2a2ecdaedac3ec36e8f2cac87810e8cc1b42800e3d2bb3"
+    },
+    "threejs-interaction": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-interaction/SKILL.md",
+      "computedHash": "da4cdf4bf4789eced05ec0692ba83436c4391232c7241b3842b9477081aa39b1"
+    },
+    "threejs-lighting": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-lighting/SKILL.md",
+      "computedHash": "566dd1ef94b4881141153f6a7e9ce1a46c643819f2975b520f0a4ad4d8cdf0ba"
+    },
+    "threejs-materials": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-materials/SKILL.md",
+      "computedHash": "7ec26e865fc849bb5e454b80b19296ba34d8e915539fb100971570da31270c96"
+    },
+    "threejs-performance": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-performance/SKILL.md",
+      "computedHash": "4567a9aad8f1da1510d0aad74c250498f580fe8b477dba4a6c8617adc8a05e6f"
+    },
+    "threejs-textures": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-textures/SKILL.md",
+      "computedHash": "8518acd24e48d91e28b4d7855fccf81157b1472831ff1fd376771cff91c83b84"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "d8e7d3afe37dcc8a97b99ffb5afdb4d0919ae0092ea8b68f44eb201f035e33ac"
+    },
+    "webapp-testing": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/webapp-testing/SKILL.md",
+      "computedHash": "3f14af7f5690695209c22fbf8c8d133769a86d64892602c09bb13f135e14e857"
+    }
+  }
+}

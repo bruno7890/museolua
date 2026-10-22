@@ -1,0 +1,71 @@
+# Publicación en GitHub Pages.
+#
+# Solo se ejecuta a mano (workflow_dispatch): publicar exige permiso explícito
+# del propietario del museo (principio VI de la constitución).
+#
+# Antes de lanzarlo:
+#   1. La clave de entrada debe ser la definitiva (scripts/hash-access-key.ts).
+#   2. `npm run validate:content -- --mode=publish` debe pasar sin marcadores.
+#   3. `npm run check:budget` debe estar dentro del presupuesto.
+
+name: Publicar en GitHub Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      motivo:
+        description: "Motivo de la publicación"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    name: Publicar
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.16.0"
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Comprobar tipos
+        run: npm run typecheck
+
+      - name: Pruebas unitarias
+        run: npm test
+
+      - name: Validar contenido (modo publicación)
+        run: npm run validate:content -- --mode=publish
+
+      - name: Comprobar presupuesto
+        run: npm run build && npm run check:budget
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Subir el artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4

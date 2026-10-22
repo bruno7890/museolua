@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "decorations": [
+    {
+      "id": "decor-rug-entry",
+      "enabled": true,
+      "kind": "floor-image",
+      "image": {
+        "src": "media/decor/rug-entry.png",
+        "alt": "Alfombra de entrada (marcador)",
+        "credit": "Marcador local, sustituir por ilustración propia",
+        "placeholder": true
+      },
+      "transform": {
+        "position": [-80, -39.9, 180],
+        "rotationDegrees": [-90, 0, 0],
+        "size": [120, 70]
+      },
+      "fit": "contain",
+      "interactive": false
+    },
+    {
+      "id": "decor-gon-left-01",
+      "enabled": true,
+      "kind": "wall-image",
+      "image": {
+        "src": "media/decor/gon-left-01.png",
+        "alt": "Ilustración decorativa (marcador)",
+        "credit": "Marcador local, pendiente de ilustración de Gon Freecss",
+        "placeholder": true
+      },
+      "placement": { "wall": "left", "position": -20, "width": 24, "centerY": 20 },
+      "fit": "contain",
+      "interactive": false
+    },
+    {
+      "id": "decor-gon-left-02",
+      "enabled": true,
+      "kind": "wall-image",
+      "image": {
+        "src": "media/decor/gon-left-02.png",
+        "alt": "Ilustración decorativa (marcador)",
+        "credit": "Marcador local, pendiente de ilustración de Hunter x Hunter",
+        "placeholder": true
+      },
+      "placement": { "wall": "left", "position": -120, "width": 24, "centerY": 20 },
+      "fit": "contain",
+      "interactive": false
+    },
+    {
+      "id": "decor-gon-right-01",
+      "enabled": true,
+      "kind": "wall-image",
+      "image": {
+        "src": "media/decor/gon-right-01.png",
+        "alt": "Ilustración decorativa (marcador)",
+        "credit": "Marcador local, pendiente de ilustración de Gon Freecss",
+        "placeholder": true
+      },
+      "placement": { "wall": "right", "position": -170, "width": 24, "centerY": 20 },
+      "fit": "contain",
+      "interactive": false
+    },
+    {
+      "id": "decor-gon-right-02",
+      "enabled": true,
+      "kind": "wall-image",
+      "image": {
+        "src": "media/decor/gon-right-02.png",
+        "alt": "Ilustración decorativa (marcador)",
+        "credit": "Marcador local, pendiente de ilustración de Hunter x Hunter",
+        "placeholder": true
+      },
+      "placement": { "wall": "right", "position": 60, "width": 24, "centerY": 20 },
+      "fit": "contain",
+      "interactive": false
+    }
+  ]
+}

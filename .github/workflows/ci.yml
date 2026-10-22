@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    name: Verificar
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.16.0"
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Comprobar tipos
+        run: npm run typecheck
+
+      - name: Pruebas unitarias
+        run: npm test
+
+      - name: Validar contenido (modo demo)
+        run: npm run validate:content
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Comprobar presupuesto
+        run: npm run check:budget
+
+      - name: Instalar el navegador de Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Recorrido E2E
+        run: npm run test:e2e
+
+      - name: Recorrido E2E en subdirectorio
+        run: npm run test:e2e:subdir

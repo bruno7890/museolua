@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Museo de Lua: museo 3D personal." />
+    <title>Museo de Lua</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#catalog-2d">Ir al catálogo</a>
+
+    <!-- Pantalla de entrada: clave informal y botón Entrar -->
+    <section id="gate" class="gate" aria-labelledby="gate-title">
+      <div class="gate__card">
+        <img class="gate__ornament" src="media/branding/ornament.svg" alt="" aria-hidden="true" width="96" height="96" />
+        <h1 id="gate-title" class="gate__title">Museo de Lua</h1>
+        <p class="gate__lead">Escribe la clave para entrar a tu museo.</p>
+        <form id="gate-form" class="gate__form" novalidate>
+          <label for="access-key">Clave</label>
+          <input id="access-key" name="access-key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" required />
+          <button id="gate-submit" type="submit" class="btn btn--primary" disabled>Continuar</button>
+        </form>
+        <p id="gate-error" class="gate__error" role="alert" hidden></p>
+        <p id="gate-status" class="gate__status" aria-live="polite">Cargando el museo…</p>
+        <button id="enter-button" type="button" class="btn btn--enter" hidden>Entrar al museo</button>
+        <p class="gate__notice">La clave es una barrera informal y no protege los archivos del sitio.</p>
+      </div>
+    </section>
+
+    <!-- Escena 3D (se crea al entrar) -->
+    <main id="museum" class="museum" hidden>
+      <div id="scene-host" class="museum__scene" aria-hidden="true"></div>
+
+      <header class="museum__bar">
+        <span class="museum__title">Museo de Lua</span>
+        <div class="museum__controls" role="toolbar" aria-label="Controles del museo">
+          <button id="btn-intro" type="button" class="btn">Escuchar introducción</button>
+          <button id="btn-mute" type="button" class="btn" aria-pressed="false">Silenciar</button>
+          <button id="btn-catalog" type="button" class="btn">Catálogo</button>
+          <button id="btn-home" type="button" class="btn">Volver al inicio</button>
+          <label class="museum__quality">
+            <span>Calidad</span>
+            <select id="quality">
+              <option value="standard">Estándar</option>
+              <option value="reduced">Reducida</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Aviso no bloqueante: la visita sigue en vertical -->
+        <div id="orientation-hint" class="orientation" role="status" hidden>
+          <p>Para ver mejor la sala, gira el dispositivo a horizontal. También puedes seguir en vertical.</p>
+          <button id="orientation-dismiss" type="button" class="btn">Continuar</button>
+        </div>
+      </header>
+
+      <div id="help" class="museum__help" hidden>
+        <p id="help-text"></p>
+      </div>
+
+      <p id="webgl-message" class="museum__fallback" role="status" hidden></p>
+    </main>
+
+    <!-- Panel de estación -->
+    <div id="station-dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="station-title" hidden>
+      <div class="dialog__card">
+        <h2 id="station-title" tabindex="-1"></h2>
+        <img id="station-image" class="dialog__image" alt="" />
+        <video id="station-video" class="dialog__video" playsinline preload="none" hidden></video>
+        <p id="station-status" class="dialog__status" aria-live="polite"></p>
+        <p id="station-text" class="dialog__text"></p>
+        <p id="station-error" class="dialog__error" role="alert" hidden></p>
+        <div class="dialog__actions">
+          <button id="station-play" type="button" class="btn btn--primary">Reproducir</button>
+          <button id="station-replay" type="button" class="btn">Volver a escuchar</button>
+          <button id="station-mute" type="button" class="btn" aria-pressed="false">Silenciar</button>
+          <button id="station-expand" type="button" class="btn" hidden>Ampliar</button>
+          <button id="station-close" type="button" class="btn">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Catálogo accesible (alternativa 2D) -->
+    <section id="catalog-2d" class="catalog" aria-labelledby="catalog-title" hidden>
+      <h2 id="catalog-title">Catálogo del museo</h2>
+      <p class="catalog__note">Las mismas estaciones del recorrido, en lista.</p>
+      <ul id="catalog-list" class="catalog__list"></ul>
+      <button id="catalog-close" type="button" class="btn">Volver al recorrido</button>
+    </section>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

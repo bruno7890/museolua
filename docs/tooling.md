@@ -34,7 +34,7 @@ Regla de trabajo: **una tarea de `tasks.md` no se marca como hecha sin una evide
 | `npm run validate:content` | Valida los catálogos (modo demo) |
 | `npm run validate:content -- --mode=publish` | Valida exigiendo contenido real |
 | `npm run check:budget` | Comprueba el peso del build y de los medios |
-| `npm run hash:key -- "clave"` | Genera el verificador SHA-256 de la clave |
+| `npm run hash:key -- --key "clave" --salt "museo-de-lua-v1"` | Genera el verificador SHA-256 de la clave |
 | `npm run media:demo` | Regenera los marcadores de demostración |
 
 Batería completa de la constitución:
@@ -62,8 +62,8 @@ Los scripts se ejecutan con `node --experimental-strip-types` (Node ≥ 22.18): 
 
 ## Pruebas
 
-- **Unitarias** (`tests/unit/`): máquina de estados, navegación, aproximación, entradas, selección de voz, validador de contenido, sesión, colección de la sala, política de introducción y coordinador de reproducción con dobles de voz y medio.
-- **E2E** (`tests/e2e/`): entrada, panel de estación, colección completa, movimiento reducido y alternativa 2D, sobre el *build* servido por `vite preview`, en Chromium de escritorio y en el perfil `Pixel 7`.
+- **Unitarias** (`tests/unit/`): máquina de estados, navegación, aproximación, entradas, selección de voz, validador de contenido, sesión, colección de la sala, política de introducción, acceso (verificador y respaldo de SHA-256) y coordinador de reproducción con dobles de voz y medio.
+- **E2E** (`tests/e2e/`): entrada (incluido el caso sin contexto seguro), panel de estación, colección completa, movimiento reducido y alternativa 2D, sobre el *build* servido por `vite preview`, en Chromium de escritorio y en el perfil `Pixel 7`.
 
 ## GitHub Spec Kit
 

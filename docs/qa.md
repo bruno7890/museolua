@@ -7,11 +7,11 @@ Registro de qué está verificado y qué queda pendiente. Actualiza esta tabla e
 | Comprobación | Comando | Resultado |
 |---|---|---|
 | Tipos | `npm run typecheck` | Correcto |
-| Unitarias | `npm test` | 113 pruebas, 15 suites, todas pasan |
+| Unitarias | `npm test` | 120 pruebas, 16 suites, todas pasan |
 | Contenido (demo) | `npm run validate:content` | Correcto |
 | Contenido (publicación) | `npm run validate:content -- --mode=publish` | **Falla a propósito**: quedan marcadores `placeholder: true` |
-| Build | `npm run build` | Correcto: 569 kB de JS (147 kB gzip), 5,9 kB de CSS, 34 archivos |
-| Presupuesto | `npm run check:budget` | Carga esencial 658 KiB ≤ 5 MiB; medios 2,00 MiB |
+| Build | `npm run build` | Correcto: 571 kB de JS (148 kB gzip), 5,9 kB de CSS, 34 archivos |
+| Presupuesto | `npm run check:budget` | Carga esencial 660 KiB ≤ 5 MiB; medios 2,00 MiB |
 | E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 15/15 |
 | E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 15/15 |
 | E2E en subdirectorio | `npm run test:e2e:subdir` | 15/15 |
@@ -26,7 +26,7 @@ npm run typecheck && npm test && npm run validate:content && npm run build && np
 
 | Medición | Valor | Cómo se obtuvo |
 |---|---|---|
-| Carga esencial sin medios | 658 KiB (147 KiB solo JS) | `npm run check:budget` |
+| Carga esencial sin medios | 660 KiB (148 KiB solo JS) | `npm run check:budget` |
 | Build completo con medios de demostración | 2,64 MiB (34 archivos) | `npm run check:budget` |
 | Archivos más pesados | `assets/index-*.js` 555 KiB, `media/video/04.mp4` 644 KiB | `npm run check:budget` |
 | Memoria de texturas | No medida | Requiere un dispositivo Android real; pendiente |
@@ -59,8 +59,8 @@ y reproducción de vídeo en red móvil.
 
 | Dispositivo | Navegador | Resultado | Notas |
 |---|---|---|---|
-| Escritorio 1280×720 | Chromium 141 (Playwright) | Automático, 15/15 | Representado por el proyecto `chromium-desktop` |
-| Móvil emulado 412×915 (Pixel 7) | Chromium 141 (Playwright) | Automático, 15/15 | No es hardware real: no valida multitáctil real ni pantalla completa |
+| Escritorio 1280×720 | Chromium 141 (Playwright) | Automático, 17/17 | Representado por el proyecto `chromium-desktop` |
+| Móvil emulado 412×915 (Pixel 7) | Chromium 141 (Playwright) | Automático, 17/17 | No es hardware real: no valida multitáctil real ni pantalla completa |
 | Android físico (Chrome) | — | **Pendiente** | Falta el dispositivo |
 | iOS / Safari | — | **Pendiente** | Sin probar |
 
@@ -108,3 +108,4 @@ Revisión estática y con lector de pantalla simulado:
 | 2026-10-21 | Llegar a un cuadro cancelaba la canción que la visitante acababa de poner | La introducción automática no interrumpe una reproducción en curso |
 | 2026-10-21 | Sin WebGL 2, al cerrar el panel de una estación el catálogo quedaba oculto y sin forma de volver a abrirlo | Al cerrar el panel, la alternativa 2D vuelve a mostrar el catálogo |
 | 2026-10-21 | Los vídeos no offerían subtítulos y la pista de la estación anterior se acumulaba | Cada estación con vídeo declara su pista `captions`; al abrir otra, se limpian las pistas |
+| 2026-10-21 | Al abrir el sitio por la IP de la red local desde el móvil, la comprobación de la clave fallaba: `crypto.subtle` no existe fuera de un contexto seguro y la entrada se quedaba bloqueada en «Comprobando la clave…» | Respaldo de SHA-256 en TypeScript para contextos no seguros; además, la entrada nunca se deja bloqueada sin explicación (ver `EC-12`) |

@@ -25,6 +25,48 @@ describe("computeVerifier", () => {
   });
 });
 
+/** Simula un contexto no seguro (http por IP local): `crypto.subtle` no existe. */
+async function sinCryptoSubtle<T>(accion: () => Promise<T>): Promise<T> {
+  const own = Object.getOwnPropertyDescriptor(globalThis.crypto, "subtle");
+  Object.defineProperty(globalThis.crypto, "subtle", { value: undefined, configurable: true });
+  try {
+    return await accion();
+  } finally {
+    if (own) Object.defineProperty(globalThis.crypto, "subtle", own);
+    else Reflect.deleteProperty(globalThis.crypto, "subtle");
+  }
+}
+
+describe("computeVerifier sin crypto.subtle", () => {
+  it("calcula el mismo verificador con el respaldo propio", async () => {
+    const verificador = await sinCryptoSubtle(() => computeVerifier("lua", SALT));
+    expect(verificador).toBe(expectedVerifier("lua"));
+  });
+
+  it("acepta la clave correcta en un contexto no seguro", async () => {
+    const config = { ...siteFixture().access, salt: SALT, verifier: expectedVerifier("lua") };
+    const ok = await sinCryptoSubtle(() => verifyAccessKey("lua", config));
+    expect(ok).toBe(true);
+  });
+
+  it("sigue rechazando la clave incorrecta en un contexto no seguro", async () => {
+    const config = { ...siteFixture().access, salt: SALT, verifier: expectedVerifier("lua") };
+    const ok = await sinCryptoSubtle(() => verifyAccessKey("otra", config));
+    expect(ok).toBe(false);
+  });
+
+  it("usa el respaldo si `crypto.subtle` falla", async () => {
+    const verificador = await sinCryptoSubtle(async () => {
+      Object.defineProperty(globalThis.crypto, "subtle", {
+        value: { digest: () => Promise.reject(new Error("sin soporte")) },
+        configurable: true,
+      });
+      return computeVerifier("lua", SALT);
+    });
+    expect(verificador).toBe(expectedVerifier("lua"));
+  });
+});
+
 describe("verifyAccessKey", () => {
   it("acepta la clave correcta aunque cambie mayúsculas o acentos", async () => {
     const config = { ...siteFixture().access, salt: SALT, verifier: expectedVerifier("lua") };

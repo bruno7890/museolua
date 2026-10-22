@@ -87,7 +87,8 @@ src/
 │   ├── session-store.ts       # sessionStorage con fallback a memoria
 │   └── webgl-support.ts       # detección WebGL 2 y pérdida de contexto
 ├── access/
-│   └── access-gate.ts         # verificador SHA-256 con sal
+│   ├── access-gate.ts         # verificador SHA-256 con sal
+│   └── sha256.ts              # respaldo de SHA-256 para contextos no seguros
 ├── content/
 │   ├── types.ts               # tipos de catálogos
 │   └── validate.ts            # validador puro (usado por script y tests)
@@ -150,7 +151,8 @@ no hizo falta (la carga vive en `src/main.ts`), `camera-rig.ts` se dividió en
 en `src/controls/input.ts`, y la pantalla de entrada, la barra de controles y el aviso de
 orientación son markup de `index.html` cableado en `src/main.ts`. La barra de controles y la
 pantalla de entrada no se separaron en módulos porque no tienen ramas propias que justifiquen
-un archivo.
+un archivo. Aparte, `src/access/sha256.ts` es el respaldo de SHA-256 que permite comprobar
+la clave en contextos no seguros (`http://` por IP local), como se explica en `research.md` §6.
 
 **Structure Decision**: Single project. Los módulos se separan por responsabilidad
 (acceso, escena, controles, medios, interfaz, contenido). Solo `media/` decide sonido.

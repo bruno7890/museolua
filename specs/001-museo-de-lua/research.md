@@ -77,6 +77,9 @@ Restricciones de la API de Three.js r186 que afectan al diseño:
 - Se almacena solo un **verificador**: SHA-256 de la clave normalizada con una sal,
   en `public/config/site.json`. La clave literal no aparece en el código ni en el repositorio.
 - `crypto.subtle` exige contexto seguro: HTTPS en Pages y `localhost` en desarrollo son válidos.
+  Al abrir el sitio por la IP de la red local (`http://192.168.x.x`) desde el móvil no existe,
+  así que se usa un respaldo de SHA-256 en TypeScript propio (`src/access/sha256.ts`). El
+  verificador es idéntico en ambos caminos: la comprobación de la clave no depende del origen.
 - Limitación explícita: el verificador es visible en el bundle; es una barrera casual (spec §13).
 
 ## 7. Herramientas de contenido

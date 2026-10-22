@@ -263,23 +263,31 @@ function main(): void {
     gateSubmit.disabled = true;
     gateError.hidden = true;
     gateStatus.textContent = "Comprobando la clave…";
-    await runtimePromise; // si el contenido todavía carga, la pulsación no se pierde
-    if (!runtime) return; // el fallo ya está escrito en pantalla
-    dispatch({ type: "submitKey" });
-    const ok = await verifyAccessKey(keyInput.value, runtime.site.access);
-    keyInput.value = ""; // la clave no permanece en el DOM
-    gateSubmit.disabled = false;
-    if (!ok) {
-      dispatch({ type: "keyRejected" });
+    try {
+      await runtimePromise; // si el contenido todavía carga, la pulsación no se pierde
+      if (!runtime) return; // el fallo ya está escrito en pantalla
+      dispatch({ type: "submitKey" });
+      const ok = await verifyAccessKey(keyInput.value, runtime.site.access);
+      keyInput.value = ""; // la clave no permanece en el DOM
+      gateSubmit.disabled = false;
+      if (!ok) {
+        dispatch({ type: "keyRejected" });
+        gateStatus.textContent = "";
+        showGateError("La clave no es correcta.");
+        keyInput.focus();
+        return;
+      }
+      session.write({ granted: true });
+      dispatch({ type: "keyAccepted" });
+      gateStatus.textContent = "Preparando tu museo…";
+      prepareMuseum();
+    } catch {
+      // La entrada nunca se queda bloqueada sin explicación (EC-12).
+      gateSubmit.disabled = false;
       gateStatus.textContent = "";
-      showGateError("La clave no es correcta.");
+      showGateError("No se pudo comprobar la clave. Inténtalo de nuevo.");
       keyInput.focus();
-      return;
     }
-    session.write({ granted: true });
-    dispatch({ type: "keyAccepted" });
-    gateStatus.textContent = "Preparando tu museo…";
-    prepareMuseum();
   });
 
   enterBtn.addEventListener("click", () => {

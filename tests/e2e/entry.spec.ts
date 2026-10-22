@@ -57,4 +57,27 @@ test.describe("entrada", () => {
     release();
     await expect(page.getByRole("button", { name: "Continuar" })).toBeEnabled();
   });
+
+  test("sin contexto seguro la clave se comprueba igual", async ({ page }) => {
+    // `crypto.subtle` no existe fuera de HTTPS y localhost: es lo que pasa al abrir
+    // el sitio por la IP de la red local desde el móvil.
+    await page.addInitScript(() => {
+      Object.defineProperty(crypto, "subtle", { value: undefined, configurable: true });
+    });
+    await page.goto("./");
+    await unlock(page);
+    await expect(page.getByRole("button", { name: "Entrar al museo" })).toBeEnabled({ timeout: 30_000 });
+  });
+
+  test("si la comprobación falla, la entrada se rehabilita y se explica", async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(crypto, "subtle", {
+        value: { digest: () => Promise.reject(new Error("sin soporte")) },
+        configurable: true,
+      });
+    });
+    await page.goto("./");
+    await unlock(page);
+    await expect(page.getByRole("button", { name: "Entrar al museo" })).toBeEnabled({ timeout: 30_000 });
+  });
 });

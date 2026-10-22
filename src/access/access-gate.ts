@@ -2,6 +2,7 @@
 // Solo se compara un verificador SHA-256 con sal; la clave introducida no se guarda ni se registra.
 
 import type { SiteConfig } from "../content/types.ts";
+import { sha256Bytes } from "./sha256.ts";
 
 export function normalizeAccessKey(raw: string): string {
   return raw
@@ -12,10 +13,28 @@ export function normalizeAccessKey(raw: string): string {
     .replace(/\s+/g, " ");
 }
 
+const toHex = (bytes: Uint8Array): string =>
+  Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+
+/**
+ * Resumen SHA-256. Usa `crypto.subtle` cuando existe (contextos seguros: HTTPS o
+ * localhost) y, si no existe o falla, recurre a la implementación propia para que la
+ * clave se pueda comprobar también al abrir el sitio por IP local desde el móvil.
+ */
+async function digestSha256(data: Uint8Array<ArrayBuffer>): Promise<Uint8Array<ArrayBuffer>> {
+  if (typeof crypto !== "undefined" && typeof crypto.subtle?.digest === "function") {
+    try {
+      return new Uint8Array(await crypto.subtle.digest("SHA-256", data));
+    } catch {
+      // Se usa el respaldo: el resultado es idéntico.
+    }
+  }
+  return sha256Bytes(data);
+}
+
 export async function computeVerifier(normalizedKey: string, salt: string): Promise<string> {
   const data = new TextEncoder().encode(`${salt}:${normalizedKey}`);
-  const digest = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+  return toHex(await digestSha256(data));
 }
 
 /** Comparación en tiempo constante sobre cadenas hexadecimales de igual longitud. */

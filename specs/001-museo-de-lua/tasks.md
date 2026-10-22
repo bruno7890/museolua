@@ -218,13 +218,26 @@
 | Paso | Resultado real |
 |---|---|
 | `npm run typecheck` | Código 0 |
-| `npm test` | 113 pruebas, 15 suites, todas pasan |
+| `npm test` | 120 pruebas, 16 suites, todas pasan |
 | `npm run validate:content` | `✓ Contenido válido (modo demo).` |
-| `npm run build` | 34 archivos; `index.js` 568,63 kB (146,58 kB gzip), `index.css` 5,94 kB |
-| `npm run check:budget` | Carga esencial 657,7 KiB ≤ 5 MiB; medios 2,00 MiB |
-| `npm run test:e2e` | 30/30 (15 escritorio + 15 móvil emulado) |
-| `npm run test:e2e:subdir` | 15/15 en `/museo-de-lua/` |
+| `npm run build` | 34 archivos; `index.js` 570,61 kB (147,76 kB gzip), `index.css` 5,94 kB |
+| `npm run check:budget` | Carga esencial 659,7 KiB ≤ 5 MiB; medios 2,00 MiB |
+| `npm run test:e2e` | 34/34 (17 escritorio + 17 móvil emulado) |
+| `npm run test:e2e:subdir` | 17/17 en `/museo-de-lua/` |
 | `npm run validate:content -- --mode=publish` | Falla a propósito: 16 marcadores, código 1 |
+
+---
+
+## Correcciones posteriores a la batería (2026-10-21)
+
+Defectos encontrados al revisar el sitio en un móvil real, no previstos en el plan.
+Cada corrección va con su prueba y su evidencia.
+
+| Defecto | Causa | Corrección | Evidencia |
+|---|---|---|---|
+| La clave no se comprobaba al abrir el sitio por la IP de la red local (`http://192.168.x.x`): la entrada se quedaba en «Comprobando la clave…» y el botón no se recuperaba | `crypto.subtle` solo existe en contextos seguros (HTTPS o `localhost`) | `src/access/sha256.ts` (SHA-256 propio) como respaldo de `src/access/access-gate.ts`; el manejador de `src/main.ts` recupera el botón y explica el error si algo falla | `tests/unit/sha256.test.ts` (3 vectores contra `node:crypto`), `tests/unit/access-gate.test.ts` (4 casos sin `crypto.subtle`), `tests/e2e/entry.spec.ts` (2 casos con contexto no seguro); comprobado en `http://192.168.1.12:4173/` sin errores de consola |
+| Al cerrar el panel de una estación en el modo alternativo 2D, el catálogo quedaba oculto para siempre | El cierre solo restauraba el catálogo cuando había escena 3D | `src/main.ts` (`closePanel`) vuelve a mostrar el catálogo cuando no hay `museum` | `tests/e2e/collection.spec.ts` (recorrido de las diez estaciones en 2D) |
+| Los vídeos no offerían subtítulos y la pista anterior se acumulaba | Faltaba la pista `captions` por estación | Cada estación con vídeo declara su pista; al abrir otra se limpian las pistas | `tests/e2e/station.spec.ts` (prueba de subtítulos) |
 
 ---
 

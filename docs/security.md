@@ -12,10 +12,18 @@ La clave de entrada es una **barrera informal**, no un control de acceso:
 
 Está escrito en la propia pantalla de entrada: *"La clave es una barrera informal y no protege los archivos del sitio."* (FR-035)
 
+### Dónde se comprueba
+
+El verificador se calcula con SHA-256. `crypto.subtle` solo existe en contextos seguros
+(HTTPS o `localhost`), así que en el resto de orígenes se usa un respaldo propio en
+TypeScript (`src/access/sha256.ts`) que produce exactamente el mismo resultado. Así la
+clave se puede comprobar también al revisar el sitio desde el móvil por la IP de la red
+local, sin exigir HTTPS. La comparación con el verificador es en tiempo constante.
+
 ### Cambiar la clave
 
 ```bash
-npm run hash:key -- "mi-clave-secreta"
+npm run hash:key -- --key "mi-clave-secreta" --salt "museo-de-lua-v1"
 ```
 
 Devuelve la sal y el verificador para `public/config/site.json`. La sal (`access.salt`) se puede mantener; lo que cambia es `access.verifier`.

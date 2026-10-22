@@ -47,6 +47,11 @@ function verifyAccessKey(raw: string, config: SiteConfig["access"]): Promise<boo
 
 No se guarda ni registra `raw`.
 
+El resumen se calcula con `crypto.subtle` cuando existe (contextos seguros: HTTPS o
+`localhost`). En el resto de orígenes (`http://192.168.x.x` desde el móvil) se usa
+`access/sha256.ts`, una implementación propia de SHA-256 con el mismo resultado. La
+comprobación de la clave no depende del origen del sitio.
+
 ## `app/session-store.ts`
 
 ```ts

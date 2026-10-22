@@ -206,7 +206,7 @@
 ## Phase 8: Pulido y verificación final
 
 - [x] T084 Medir carga inicial sin medios (≤ 5 MiB) y memoria de texturas; registrar en `docs/qa.md` — cubre: SC-009. *(Carga esencial 658 KiB medida; la memoria de texturas queda registrada como pendiente de hardware real)*
-- [x] T085 Revisión de accesibilidad: teclado completo, foco visible, contraste, etiquetas; registrar resultados — cubre: SC-007. *(Registrado en `docs/qa.md`; el contraste medido con herramienta queda pendiente)*
+- [x] T085 Revisión de accesibilidad: teclado completo, foco visible, contraste, etiquetas; registrar resultados — cubre: SC-007. *(Registrado en `docs/qa.md`; el contraste se midió después con axe-core y con cálculo WCAG, ver `docs/qa.md`)*
 - [x] T086 Revisión de seguridad: sin `innerHTML` con catálogo, sin `eval`, sin permisos de cámara/micrófono/ubicación, verificador sin clave literal — cubre: FR-038, constitución V. *(`npm audit`: 0 vulnerabilidades)*
 - [x] T087 Ejecutar la batería completa: `npm run typecheck && npm test && npm run validate:content && npm run build && npm run check:budget && npm run test:e2e`. Registrar la salida real. *(Salida registrada más abajo)*
 - [x] T088 Actualizar `specs/001-museo-de-lua/checklists/requirements.md` solo con evidencias de T087 y de pruebas manuales realizadas.
@@ -218,12 +218,12 @@
 | Paso | Resultado real |
 |---|---|
 | `npm run typecheck` | Código 0 |
-| `npm test` | 123 pruebas, 16 suites, todas pasan |
+| `npm test` | 127 pruebas, 16 suites, todas pasan |
 | `npm run validate:content` | `✓ Contenido válido (modo demo).` |
 | `npm run build` | 34 archivos; `index.js` 570,61 kB (147,76 kB gzip), `index.css` 5,94 kB |
 | `npm run check:budget` | Carga esencial 662 KiB ≤ 5 MiB; medios 2,00 MiB |
-| `npm run test:e2e` | 44/44 (22 escritorio + 22 móvil emulado) |
-| `npm run test:e2e:subdir` | 22/22 en `/museo-de-lua/` |
+| `npm run test:e2e` | 50/50 (25 escritorio + 25 móvil emulado) |
+| `npm run test:e2e:subdir` | 25/25 en `/museo-de-lua/` |
 | `npm run validate:content -- --mode=publish` | Falla a propósito: 16 marcadores, código 1 |
 
 ---

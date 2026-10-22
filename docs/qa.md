@@ -7,14 +7,14 @@ Registro de qué está verificado y qué queda pendiente. Actualiza esta tabla e
 | Comprobación | Comando | Resultado |
 |---|---|---|
 | Tipos | `npm run typecheck` | Correcto |
-| Unitarias | `npm test` | 123 pruebas, 16 suites, todas pasan |
+| Unitarias | `npm test` | 127 pruebas, 16 suites, todas pasan |
 | Contenido (demo) | `npm run validate:content` | Correcto |
 | Contenido (publicación) | `npm run validate:content -- --mode=publish` | **Falla a propósito**: quedan marcadores `placeholder: true` |
 | Build | `npm run build` | Correcto: 571 kB de JS (148 kB gzip), 5,9 kB de CSS, 34 archivos |
 | Presupuesto | `npm run check:budget` | Carga esencial 662 KiB ≤ 5 MiB; medios 2,00 MiB |
-| E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 22/22 |
-| E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 22/22 |
-| E2E en subdirectorio | `npm run test:e2e:subdir` | 22/22 |
+| E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 25/25 |
+| E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 25/25 |
+| E2E en subdirectorio | `npm run test:e2e:subdir` | 25/25 |
 
 La batería completa que exige la constitución es:
 
@@ -59,8 +59,8 @@ y reproducción de vídeo en red móvil.
 
 | Dispositivo | Navegador | Resultado | Notas |
 |---|---|---|---|
-| Escritorio 1280×720 | Chromium 141 (Playwright) | Automático, 22/22 | Representado por el proyecto `chromium-desktop` |
-| Móvil emulado 412×915 (Pixel 7) | Chromium 141 (Playwright) | Automático, 22/22 | No es hardware real: no valida multitáctil real ni pantalla completa |
+| Escritorio 1280×720 | Chromium 141 (Playwright) | Automático, 25/25 | Representado por el proyecto `chromium-desktop` |
+| Móvil emulado 412×915 (Pixel 7) | Chromium 141 (Playwright) | Automático, 25/25 | No es hardware real: no valida multitáctil real ni pantalla completa |
 | Android físico (Chrome) | — | **Pendiente** | Falta el dispositivo |
 | iOS / Safari | — | **Pendiente** | Sin probar |
 
@@ -86,7 +86,24 @@ Revisión estática y con lector de pantalla simulado:
 - [x] Etiquetas: `aria-live` en los estados de reproducción, `role="alert"` en los errores, `aria-modal` en el diálogo.
 - [x] Alternativa textual completa: la visita no depende de la voz ni de la imagen.
 - [x] `prefers-reduced-motion` reduce la transición de entrada de 1000 ms a 150 ms.
-- [ ] Contraste real medido con herramienta (no solo revisión del código de color).
+- [x] Contraste medido con herramienta: ver «Contraste» más abajo.
+
+### Contraste (medido)
+
+Herramienta: `axe-core` 4.14.0 (dependencia de desarrollo fijada) ejecutado en Playwright sobre la entrada, el museo, el catálogo y el panel de estación (`tests/e2e/contrast.spec.ts`). Resultado: 0 incumplimientos de `color-contrast` en las cuatro pantallas.
+
+axe no puede determinar el fondo detrás de un degradado o de la escena 3D; esos casos se calculan en el peor color posible (`tests/unit/contrast.test.ts`):
+
+| Pareja | Razón de contraste | Mínimo WCAG AA |
+|---|---|---|
+| Texto plum sobre lavanda (entrada) | 13,2:1 | 4,5:1 |
+| Texto plum sobre tinte lila o salmón del degradado | 9,9:1 y 10,1:1 | 4,5:1 |
+| Barra y ayuda del museo sobre la escena (90 % de fondo) | 11,4:1 o más | 4,5:1 |
+| Botón principal: blanco sobre violeta | 7,5:1 | 4,5:1 |
+| Botón «Entrar al museo»: blanco sobre violeta-lila (el más ajustado) | 5,4:1 | 4,5:1 |
+| Error: texto plum sobre `#fbe3dc` | 11,7:1 | 4,5:1 |
+
+Pendiente de medir en el móvil real: el contraste bajo la luz del día, que no se puede reproducir con una herramienta.
 
 ## Seguridad (T086)
 

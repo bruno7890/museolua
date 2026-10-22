@@ -402,12 +402,29 @@ function main(): void {
       onToggleMute: () => coordinator?.setMuted(!session.read().muted),
       onExpand: () => {
         const v = shared.element;
-        v.classList.toggle("dialog__video--expanded");
-        if (v.classList.contains("dialog__video--expanded") && v.requestFullscreen) {
-          void v.requestFullscreen().catch(() => {});
+        // Pantalla completa real: si ya está activa, se sale con la API del navegador.
+        if (document.fullscreenElement === v) {
+          void document.exitFullscreen().catch(() => {});
+          return;
+        }
+        // Sin pantalla completa, la ampliación es solo visual (clase CSS).
+        if (v.classList.contains("dialog__video--expanded")) {
+          v.classList.remove("dialog__video--expanded");
+          return;
+        }
+        if (v.requestFullscreen) {
+          void v.requestFullscreen().catch(() => v.classList.add("dialog__video--expanded"));
+        } else {
+          v.classList.add("dialog__video--expanded");
         }
       },
       onClose: closePanel,
+    });
+
+    // Salir de pantalla completa por el sistema (Atrás, Esc, botón del navegador) debe
+    // quitar la ampliación; si no, el vídeo queda tapando el diálogo.
+    document.addEventListener("fullscreenchange", () => {
+      shared.element.classList.toggle("dialog__video--expanded", document.fullscreenElement === shared.element);
     });
 
     coordinator.subscribe((s) => {

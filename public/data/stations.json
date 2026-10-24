@@ -10,9 +10,9 @@
       "description": "Marcador de demostración: sustituir por la obra real.",
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
-      "image": { "src": "media/images/01.png", "alt": "Marcador de demostración 01", "width": 1024, "height": 1024 },
+      "image": { "src": "media/images/01.jpg", "alt": "Marcador de demostración 01", "width": 1024, "height": 308 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la primera estación.", "policy": "first-visit" },
-      "media": { "src": "media/audio/01.mp3", "mime": "audio/mpeg", "durationSeconds": 6 },
+      "media": { "src": "media/audio/01.mp3", "mime": "audio/mpeg", "durationSeconds": 142 },
       "placement": { "wall": "left", "position": 200, "width": 35, "centerY": 0 }
     },
     {
@@ -24,9 +24,9 @@
       "description": "Marcador de demostración: sustituir por la obra real.",
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
-      "image": { "src": "media/images/02.png", "alt": "Marcador de demostración 02", "width": 1024, "height": 1024 },
+      "image": { "src": "media/images/02.jpg", "alt": "Marcador de demostración 02", "width": 764, "height": 1024 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la segunda estación.", "policy": "first-visit" },
-      "media": { "src": "media/audio/02.mp3", "mime": "audio/mpeg", "durationSeconds": 6 },
+      "media": { "src": "media/audio/02.mp3", "mime": "audio/mpeg", "durationSeconds": 125 },
       "placement": { "wall": "left", "position": 50, "width": 20, "centerY": 0 }
     },
     {
@@ -38,9 +38,9 @@
       "description": "Marcador de demostración: sustituir por la obra real.",
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
-      "image": { "src": "media/images/03.png", "alt": "Marcador de demostración 03", "width": 1024, "height": 1024 },
+      "image": { "src": "media/images/03.jpg", "alt": "Marcador de demostración 03", "width": 1024, "height": 984 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la tercera estación.", "policy": "first-visit" },
-      "media": { "src": "media/audio/03.mp3", "mime": "audio/mpeg", "durationSeconds": 6 },
+      "media": { "src": "media/audio/03.mp3", "mime": "audio/mpeg", "durationSeconds": 61 },
       "placement": { "wall": "left", "position": -160, "width": 28, "centerY": 0 }
     },
     {

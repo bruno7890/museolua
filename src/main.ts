@@ -40,7 +40,6 @@ function declaredPaths(site: SiteConfig, stations: StationCatalog, decor: Decora
   const paths = new Set<string>([site.ornament.src]);
   for (const s of stations.stations) {
     paths.add(s.image.src);
-    if (s.backdrop) paths.add(s.backdrop.src);
     paths.add(s.media.src);
     if (s.media.poster) paths.add(s.media.poster);
     if (s.captions) paths.add(s.captions.src);

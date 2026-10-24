@@ -22,13 +22,18 @@ test.describe("ampliar vídeo", () => {
     await expect(ampliar).toBeVisible();
 
     await ampliar.click();
-    // Si el navegador admite pantalla completa, entra; si no, la ampliación es solo visual.
-    const enPantallaCompleta = await page.evaluate(() => document.fullscreenElement !== null);
     await expect(page.getByRole("button", { name: "Reducir" })).toBeVisible();
+
+    // Si el navegador concede pantalla completa, se sale como lo hace el sistema (Esc, Atrás
+    // o el botón de salir), sin pasar por la app. Bajo carga puede no concederla; entonces la
+    // ampliación es solo visual y se reduce con el propio botón.
+    const enPantallaCompleta = await page.evaluate(() => document.fullscreenElement !== null);
     if (enPantallaCompleta) {
-      // Salida que hace el sistema (Esc, Atrás o el botón de salir), sin pasar por la app.
       await page.evaluate(() => document.exitFullscreen());
       await expect.poll(() => page.evaluate(() => document.fullscreenElement === null)).toBe(true);
+    } else {
+      await expect(page.locator("#station-video")).toHaveClass(/dialog__video--expanded/);
+      await page.getByRole("button", { name: "Reducir" }).click();
     }
 
     await expect(page.locator("#station-video")).not.toHaveClass(/dialog__video--expanded/);

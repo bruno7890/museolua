@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { DecorationCatalog, StationCatalog } from "../../src/content/types.ts";
 
-// Contenido real de la sala: paneles, piso y pantallas de fondo ya no son marcadores.
+// Contenido real de la sala: portadas, paneles y piso ya no son marcadores.
 const PUBLIC = path.resolve("public");
 const leer = <T>(ruta: string): T => JSON.parse(readFileSync(path.join(PUBLIC, ruta), "utf8")) as T;
 const decorations = leer<DecorationCatalog>("data/decorations.json");
@@ -40,27 +40,29 @@ describe("decoraciones con ilustraciones", () => {
   });
 });
 
-describe("pantallas de fondo de las estaciones de audio", () => {
+describe("portadas de las estaciones", () => {
   const audio = stations.stations.filter((s) => s.type === "audio");
 
-  it("cada estación de audio tiene su pantalla de fondo, sin repetir entre estaciones", () => {
-    const fondos = audio.map((s) => s.backdrop?.src);
-    for (const [i, src] of fondos.entries()) {
-      expect(src, audio[i]!.id).toBeDefined();
-    }
-    expect(new Set(fondos).size).toBe(audio.length);
-  });
-
-  it("la pantalla de fondo existe y no es la misma imagen que la portada", () => {
-    for (const s of audio) {
-      expect(existsSync(path.join(PUBLIC, s.backdrop!.src)), s.backdrop!.src).toBe(true);
-      expect(s.backdrop!.src, s.id).not.toBe(s.image.src);
+  it("cada estación de audio tiene su portada, sin repetir ninguna imagen", () => {
+    const portadas = audio.map((s) => s.image.src);
+    expect(portadas.every((src) => src.endsWith(".jpg")), portadas.join(", ")).toBe(true);
+    expect(new Set(portadas).size).toBe(audio.length);
+    for (const [i, src] of portadas.entries()) {
+      expect(stations.stations.find((s) => s.id === audio[i]!.id)!.placeholder, audio[i]!.id).toBe(false);
+      expect(existsSync(path.join(PUBLIC, src)), src).toBe(true);
     }
   });
 
-  it("las estaciones de vídeo no cambian", () => {
+  it("ninguna imagen se usa a la vez como portada y como decoración", () => {
+    const portadas = new Set(stations.stations.map((s) => s.image.src));
+    for (const d of decorations.decorations) {
+      expect(portadas.has(d.image.src), d.image.src).toBe(false);
+    }
+  });
+
+  it("las estaciones de vídeo siguen con su marcador", () => {
     for (const s of stations.stations.filter((x) => x.type === "video")) {
-      expect(s.backdrop, s.id).toBeUndefined();
+      expect(s.placeholder, s.id).toBe(true);
     }
   });
 });

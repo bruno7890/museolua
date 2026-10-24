@@ -306,9 +306,6 @@ los archivos de contenido; validar y preparar una entrega sin publicarla.
   ni contenido; al cambiarla durante US1-A4 la visita mantiene controles y selección.
 - **FR-040**: Vídeos con subtítulos aportados DEBEN permitir activarlos; su ausencia
   NO DEBE generar pistas rotas ni bloquear reproducción. (US2-A7)
-- **FR-041**: Una estación DEBE poder declarar una pantalla de fondo opcional; la portada
-  se dibuja encima, más pequeña, dentro del mismo marco. La pantalla de fondo NO DEBE
-  sustituir a la portada ni alterar la selección de la estación. (US3-A3)
 
 ### Key Entities *(include if feature involves data)*
 

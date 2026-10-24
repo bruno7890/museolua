@@ -218,7 +218,7 @@
 | Paso | Resultado real |
 |---|---|
 | `npm run typecheck` | Código 0 |
-| `npm test` | 139 pruebas, 17 suites, todas pasan |
+| `npm test` | 135 pruebas, 17 suites, todas pasan |
 | `npm run validate:content` | `✓ Contenido válido (modo demo).` |
 | `npm run build` | 34 archivos; `index.js` 570,61 kB (147,76 kB gzip), `index.css` 5,94 kB |
 | `npm run check:budget` | Carga esencial 662 KiB ≤ 5 MiB; medios 2,00 MiB |

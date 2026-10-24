@@ -13,7 +13,6 @@ public/
     ├── branding/ornament.svg # emblema de la portada
     ├── images/               # una portada por estación (PNG/JPG/WebP)
     ├── decor/                # alfombra y paneles de pared
-    ├── fondos/               # pantallas de fondo de las estaciones (opcional)
     ├── audio/                # una canción por estación de audio
     ├── video/                # un vídeo por estación de vídeo
     └── captions/             # subtítulos opcionales (.vtt)
@@ -48,8 +47,6 @@ Recomendaciones para que la visita vaya fluida en móvil:
   "credit": "Autoría · Fuente · Licencia",
   "placeholder": false,         // true = marcador de demostración
   "image": { "src": "media/images/01.png", "alt": "Descripción de la imagen", "width": 1024, "height": 1024 },
-  // Opcional: pantalla de fondo tras la portada. La portada se dibuja encima, al 60 % del ancho.
-  "backdrop": { "src": "media/fondos/fondo-1.jpg", "width": 800, "height": 769 },
   "narration": {
     "mode": "browser",          // "browser" = voz del navegador | "text" = solo texto
     "text": "Lo que se lee en voz alta al llegar al cuadro.",

@@ -63,8 +63,6 @@ interface Station {
   credit: string;
   placeholder: boolean;
   image: { src: string; alt: string; width: number; height: number };
-  // FR-041: pantalla de fondo opcional. La portada se dibuja encima, más pequeña.
-  backdrop?: { src: string; width: number; height: number };
   narration: { mode: "browser"; text: string; speechText?: string; policy: "first-visit" };
   media: { src: string; mime: "audio/mpeg" | "audio/wav" | "video/mp4"; durationSeconds?: number; poster?: string };
   captions?: { src: string; lang: string };       // FR-040: opcional, solo vídeo
@@ -83,8 +81,6 @@ Validaciones:
   (`height_frame = width_frame × height / width`).
 - Ningún par `(wall, position)` repetido; `|position_a − position_b| ≥ width_a/2 + width_b/2 + 8`
   en el mismo muro (margen de separación).
-- `backdrop` es opcional; si está, `width`/`height` > 0 y `src` debe existir. Con pantalla de
-  fondo, el ancho del marco es el del fondo y la portada se reduce al 60 % de ese ancho.
 
 ## `data/decorations.json`
 

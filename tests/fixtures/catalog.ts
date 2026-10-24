@@ -10,7 +10,7 @@ export function siteFixture(): SiteConfig {
     schemaVersion: 1,
     title: "Museo de Lua",
     ornament: { src: "media/branding/ornament.svg", alt: "", placeholder: true },
-    theme: { purple: "#C7B5E8", salmon: "#F2AA9B", lavender: "#F8F5FC", plum: "#30263D", grayWarm: "#D5CFD5" },
+    room: { ceilingImage: { src: "media/room/techo.jpg", width: 1024, height: 908 } },
     entry: { label: "Entrar al museo", transitionMs: 1000, reducedTransitionMs: 150 },
     access: { algorithm: "SHA-256", salt: "museo-de-lua-demo", verifier: HEX64, informalNotice: "Barrera informal." },
     speech: {
@@ -117,6 +117,8 @@ function decorWall(id: string, wall: "left" | "right", position: number, width: 
 /** Rutas que existen en public/ para el catálogo de referencia. */
 export function existingPathsFixture(): Set<string> {
   const paths = new Set<string>(["config/site.json", "data/stations.json", "data/decorations.json", "media/branding/ornament.svg"]);
+  const techo = siteFixture().room.ceilingImage;
+  if (techo) paths.add(techo.src);
   for (const s of stationsFixture().stations) {
     paths.add(s.image.src);
     paths.add(s.media.src);

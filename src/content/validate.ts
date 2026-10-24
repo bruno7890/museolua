@@ -145,12 +145,16 @@ export function validateSiteConfig(input: unknown, opts: ValidateOptions): Valid
     c.placeholder("ornament.placeholder", ornament.placeholder);
   } else c.add("ornament", "shape", "Se esperaba un objeto.");
 
-  if (isObj(input.theme)) {
-    for (const key of ["purple", "salmon", "lavender", "plum", "grayWarm"]) {
-      const v = input.theme[key];
-      if (typeof v !== "string" || !/^#[0-9A-Fa-f]{6}$/.test(v)) c.add(`theme.${key}`, "color", "Color hexadecimal #RRGGBB requerido.");
+  if (isObj(input.room)) {
+    const techo = input.room.ceilingImage;
+    if (techo !== undefined) {
+      if (isObj(techo)) {
+        relPath(c, "room.ceilingImage.src", techo.src, opts.existingPaths);
+        num(c, "room.ceilingImage.width", techo.width, { positive: true });
+        num(c, "room.ceilingImage.height", techo.height, { positive: true });
+      } else c.add("room.ceilingImage", "shape", "Se esperaba un objeto.");
     }
-  } else c.add("theme", "shape", "Se esperaba un objeto.");
+  } else c.add("room", "shape", "Se esperaba un objeto.");
 
   if (isObj(input.entry)) {
     num(c, "entry.transitionMs", input.entry.transitionMs, { positive: true });

@@ -4,9 +4,9 @@
 import * as THREE from "three";
 import type { Decoration } from "../content/types.ts";
 import { OFFSET_BORDER, OFFSET_IMAGE, heightFor, placeOnWall } from "./wall-placement.ts";
+import { PALETTE } from "./palette.ts";
 
 const MOLDURA = 3; // mismo ancho que la moldura de los cuadros (station-frames.ts)
-const MOLDURA_COLOR = 0x30263d; // ciruela de la paleta
 
 export interface DecorHandle {
   group: THREE.Group;
@@ -22,8 +22,10 @@ export function buildDecor(
   group.name = "decor";
   const textures: THREE.Texture[] = [];
 
+  let indice = 0;
   for (const d of decorations) {
     if (!d.enabled) continue;
+    const piezaColor = new THREE.Color(PALETTE.neonAt(indice++)).getHex();
 
     if (d.kind === "floor-image" && d.transform) {
       const [w, h] = d.transform.size;
@@ -47,7 +49,7 @@ export function buildDecor(
     } else if (d.kind === "wall-image" && d.placement) {
       const { wall, position, width, centerY } = d.placement;
       const geo = new THREE.PlaneGeometry(width, width * 1.5);
-      const mat = new THREE.MeshBasicMaterial({ color: 0xc7b5e8, side: THREE.DoubleSide });
+      const mat = new THREE.MeshBasicMaterial({ color: 0x2a1b4d, side: THREE.DoubleSide });
       const mesh = new THREE.Mesh(geo, mat);
       mesh.name = d.id;
       mesh.userData = { decorationId: d.id, interactive: false };
@@ -55,7 +57,7 @@ export function buildDecor(
       // Moldura de galería detrás del panel, con la misma paleta que los cuadros.
       const moldura = new THREE.Mesh(
         new THREE.PlaneGeometry(width + MOLDURA * 2, width * 1.5 + MOLDURA * 2),
-        new THREE.MeshBasicMaterial({ color: MOLDURA_COLOR }),
+        new THREE.MeshBasicMaterial({ color: piezaColor }),
       );
       moldura.name = `moldura:${d.id}`;
       moldura.userData = { interactive: false };

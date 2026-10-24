@@ -5,6 +5,7 @@ import * as THREE from "three";
 import type { Station } from "../content/types.ts";
 import { OFFSET_BORDER, OFFSET_IMAGE, heightFor, placeOnWall } from "./wall-placement.ts";
 import { COLORS } from "./room.ts";
+import { PALETTE } from "./palette.ts";
 
 export interface StationFrame {
   stationId: string;
@@ -20,11 +21,10 @@ export interface FramesHandle {
   dispose(): void;
 }
 
-const PLACEHOLDER = 0xf8f5fc;
+const PLACEHOLDER = 0x2a1b4d; // violeta oscuro mientras carga la imagen
 const MOLDURA = 3; // ancho de la moldura exterior, en unidades de la sala
-const MOLDURA_COLOR = 0x30263d; // ciruela de la paleta
-const ACENTO = 1.5; // franja salmón entre la moldura y la imagen
-const ACENTO_COLOR = 0xf2aa9b; // salmón de la paleta
+const ACENTO = 1.5; // línea oscura entre el neón y la imagen
+const ACENTO_COLOR = new THREE.Color(PALETTE.background).getHex();
 
 export function buildStationFrames(
   stations: readonly Station[],
@@ -37,14 +37,17 @@ export function buildStationFrames(
   const geometries: THREE.BufferGeometry[] = [];
   const materials: THREE.Material[] = [];
 
+  let indice = 0;
   for (const s of stations) {
     if (!s.enabled) continue;
+    // Cada cuadro lleva un neón distinto: la sala queda de fiesta sin repetir el mismo color.
+    const molduraColor = new THREE.Color(PALETTE.neonAt(indice++)).getHex();
     const w = s.placement.width;
     const h = heightFor(w, s.image.width, s.image.height);
 
     // Molduras de galería: capa exterior morada y acento salmón justo alrededor de la imagen.
     const molduraGeo = new THREE.PlaneGeometry(w + MOLDURA * 2, h + MOLDURA * 2);
-    const molduraMat = new THREE.MeshBasicMaterial({ color: MOLDURA_COLOR });
+    const molduraMat = new THREE.MeshBasicMaterial({ color: molduraColor });
     const molduraExterior = new THREE.Mesh(molduraGeo, molduraMat);
     const acentoGeo = new THREE.PlaneGeometry(w + ACENTO * 2, h + ACENTO * 2);
     const acentoMat = new THREE.MeshBasicMaterial({ color: ACENTO_COLOR });

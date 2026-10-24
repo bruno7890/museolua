@@ -7,11 +7,11 @@ Registro de qué está verificado y qué queda pendiente. Actualiza esta tabla e
 | Comprobación | Comando | Resultado |
 |---|---|---|
 | Tipos | `npm run typecheck` | Correcto |
-| Unitarias | `npm test` | 137 pruebas, 17 suites, todas pasan |
+| Unitarias | `npm test` | 149 pruebas, 21 suites, todas pasan |
 | Contenido (demo) | `npm run validate:content` | Correcto |
 | Contenido (publicación) | `npm run validate:content -- --mode=publish` | **Falla a propósito**: quedan marcadores `placeholder: true` |
-| Build | `npm run build` | Correcto: 573 kB de JS (148 kB gzip), 7,5 kB de CSS, 35 archivos |
-| Presupuesto | `npm run check:budget` | Carga esencial 2,09 MiB ≤ 5 MiB; medios 6,79 MiB |
+| Build | `npm run build` | Correcto: 574 kB de JS (149 kB gzip), 7,7 kB de CSS, 36 archivos |
+| Presupuesto | `npm run check:budget` | Carga esencial 2,23 MiB ≤ 5 MiB; medios 6,79 MiB |
 | E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 25/25 |
 | E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 25/25 |
 | E2E en subdirectorio | `npm run test:e2e:subdir` | 25/25 |
@@ -26,8 +26,8 @@ npm run typecheck && npm test && npm run validate:content && npm run build && np
 
 | Medición | Valor | Cómo se obtuvo |
 |---|---|---|
-| Carga esencial sin medios | 2,09 MiB (148 KiB solo JS; el resto son portadas y paneles) | `npm run check:budget` |
-| Build completo con medios | 8,88 MiB (43 archivos) | `npm run check:budget` |
+| Carga esencial sin medios | 2,23 MiB (149 KiB solo JS; el resto son portadas, paneles y la imagen del techo) | `npm run check:budget` |
+| Build completo con medios | 9,02 MiB (36 archivos) | `npm run check:budget` |
 | Archivos más pesados | `media/audio/01.mp3` 2,23 MiB, `media/video/04.mp4` 644 KiB | `npm run check:budget` |
 | Memoria de texturas | No medida | Requiere un dispositivo Android real; pendiente |
 
@@ -96,12 +96,12 @@ axe no puede determinar el fondo detrás de un degradado o de la escena 3D; esos
 
 | Pareja | Razón de contraste | Mínimo WCAG AA |
 |---|---|---|
-| Texto plum sobre lavanda (entrada) | 13,2:1 | 4,5:1 |
-| Texto plum sobre tinte lila o salmón del degradado | 9,9:1 y 10,1:1 | 4,5:1 |
-| Barra y ayuda del museo sobre la escena (90 % de fondo) | 11,4:1 o más | 4,5:1 |
-| Botón principal: blanco sobre violeta | 7,5:1 | 4,5:1 |
-| Botón «Entrar al museo»: blanco sobre violeta-lila (el más ajustado) | 5,4:1 | 4,5:1 |
-| Error: texto plum sobre `#fbe3dc` | 11,7:1 | 4,5:1 |
+| Texto claro sobre el fondo de la entrada | 17,5:1 | 4,5:1 |
+| Texto claro sobre los tintes del degradado (magenta, cian) | 12,6:1 o más | 4,5:1 |
+| Barra y ayuda del museo sobre la escena (92 % de fondo) | 15:1 o más | 4,5:1 |
+| Botón principal: letra oscura sobre neón magenta | 6,0:1 | 4,5:1 |
+| Botón «Entrar al museo»: letra oscura sobre el degradado de neón | 6,0:1 | 4,5:1 |
+| Error: texto claro sobre `#4a1030` | 13,5:1 | 4,5:1 |
 
 Pendiente de medir en el móvil real: el contraste bajo la luz del día, que no se puede reproducir con una herramienta.
 
@@ -131,3 +131,6 @@ Pendiente de medir en el móvil real: el contraste bajo la luz del día, que no 
 | 2026-10-22 | Al pulsar Reproducir en el móvil no había ninguna señal mientras el audio cargaba; el botón parecía no responder | El estado no distinguía «cargando» de «listo» | Nueva fase `loading`: el botón muestra «Cargando…», se deshabilita y el estado dice «Cargando el audio…» | `tests/unit/playback-coordinator.test.ts`, `tests/e2e/play-loading.spec.ts` |
 | 2026-10-22 | Una narración que terminaba o fallaba tarde podía devolver a «listo» un audio que cargaba o ya sonaba | Los callbacks de la voz no comprobaban la fase actual | `onEnd`/`onFail` actúan solo si la fase es `narrating` | `tests/unit/playback-coordinator.test.ts` (eventos tardíos) |
 | 2026-10-22 | El botón «Ampliar» no indicaba que el vídeo estaba ampliado | Sin etiqueta de estado | El botón dice «Reducir» mientras el vídeo está ampliado; un único punto (`setVideoExpanded`) controla clase y etiqueta | `tests/e2e/video-expand.spec.ts` |
+| 2026-10-24 | El propietario pidió una sala oscura con neones fuertes en lugar de lila y salmón, su imagen grande en el techo y luces de fiesta | Decisión de diseño del propietario | Paleta oscura/neón en la sala y en la interfaz; `room.ceilingImage` cubre el techo; tres haces de neón giran desde arriba. La paleta sale de `site.json` (`theme`) y pasa a `src/scene/palette.ts` | `tests/unit/scene-palette.test.ts`, `room-ceiling.test.ts`, `light-rig.test.ts`, `contrast.test.ts`; contraste con axe en E2E |
+| 2026-10-24 | Con la imagen del techo, la entrada se quedaba en «Cargando el museo…» | Las rutas de `room.ceilingImage` no contaban como declaradas al arrancar | Se añaden a `declaredPaths` en `src/main.ts` | E2E 50/50 |
+| 2026-10-24 | Las luces animadas dejaban la escena redibujándose en cada fotograma: las E2E tardaban cuatro veces más y algunas agotaban el tiempo | La animación pedía un fotograma nuevo siempre | La animación va a 10 pasos por segundo y se pausa mientras el panel o el catálogo tapan la sala | E2E 50/50 en 1,8 min |

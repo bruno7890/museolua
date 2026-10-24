@@ -108,11 +108,11 @@ y verificar nombres, tipos y textos; la sala permite comprobar su distribución 
    aplican las mismas reglas de narración, silencio y reproducción que desde el cuadro.
 3. **US3-A3 — Given** la sala completa, **When** se inspeccionan sus paredes y entrada,
    **Then** hay tres estaciones en cada lateral, dos al fondo y dos atrás; los vídeos
-   están separados. Alfombra y cuatro paneles adicionales no bloquean aproximaciones,
+   están separados. Alfombra y cinco paneles adicionales no bloquean aproximaciones,
    no parpadean con las superficies ni abren reproductores al seleccionarlos.
 4. **US3-A4 — Given** contenido de muestra, **When** se visita el museo,
    **Then** las piezas pendientes están identificadas, el emblema es sustituible,
-   las imágenes mantienen proporción y la paleta lavanda/salmón conserva texto legible.
+   las imágenes mantienen proporción y la paleta conserva texto legible.
 
 ### User Story 4 - Continuar ante fallos y usar la visita de forma accesible (Priority: P1)
 
@@ -268,6 +268,8 @@ los archivos de contenido; validar y preparar una entrega sin publicarla.
 - **FR-025**: Identidad DEBE ser amistosa con título y adornos sustituibles, paleta
   consolidada y proporciones de imagen intactas; sin mensajes de pareja ni decoración
   romántica añadida. Recursos provisionales DEBEN identificarse. (US3-A4)
+  *(La paleta pasó a oscura con neones por decisión del propietario en 2026-10; ver
+  `docs/design.md`.)*
 
 #### Accesibilidad y recuperación
 

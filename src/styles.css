@@ -2,16 +2,21 @@
    Texto oscuro sobre pasteles; el botón principal usa violeta con texto claro (contraste > 4.5:1). */
 
 :root {
-  --purple: #c7b5e8;
-  --salmon: #f2aa9b;
-  --lavender: #f8f5fc;
-  --violet: #654397;
-  --plum: #30263d;
-  --gray-warm: #d5cfd5;
-  --focus: #30263d;
+  /* Tema oscuro con neones fuertes (elección del propietario, 2026-10).
+     Texto claro sobre fondo oscuro: contraste ≥ 4,5:1. Sobre neón, letra oscura. */
+  --bg: #0b0716;
+  --surface: #1b1033;
+  --surface-2: #221833;
+  --muted: #2a1b4d;
+  --text: #f3eeff;
+  --neon-magenta: #ff2fb9;
+  --neon-cyan: #23e5ff;
+  --neon-yellow: #ffe94a;
+  --on-neon: #0b0716;
+  --focus: #ffe94a;
   --touch: 48px;
   --radius: 14px;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 *,
@@ -24,8 +29,8 @@ html,
 body {
   margin: 0;
   height: 100%;
-  background: var(--lavender);
-  color: var(--plum);
+  background: var(--bg);
+  color: var(--text);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 16px;
   line-height: 1.45;
@@ -47,8 +52,8 @@ body {
   left: 8px;
   top: -48px;
   padding: 10px 14px;
-  background: var(--lavender);
-  color: var(--plum);
+  background: var(--bg);
+  color: var(--text);
   z-index: 100;
 }
 .skip-link:focus {
@@ -60,10 +65,10 @@ body {
   min-height: var(--touch);
   min-width: var(--touch);
   padding: 10px 16px;
-  border: 2px solid var(--plum);
+  border: 2px solid var(--neon-cyan);
   border-radius: 999px;
-  background: var(--lavender);
-  color: var(--plum);
+  background: var(--surface);
+  color: var(--text);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
@@ -74,28 +79,28 @@ body {
   cursor: not-allowed;
 }
 .btn--primary {
-  background: var(--violet);
-  border-color: var(--violet);
-  color: #ffffff;
+  background: var(--neon-magenta);
+  border-color: var(--neon-magenta);
+  color: var(--on-neon);
 }
 .btn--enter {
   min-height: 64px;
   padding: 14px 28px;
   font-size: 1.15rem;
-  background: linear-gradient(120deg, var(--violet), #7e57b5);
-  border-color: var(--violet);
-  color: #ffffff;
-  box-shadow: 0 0 0 0 rgba(242, 170, 155, 0.7);
+  background: linear-gradient(120deg, var(--neon-magenta), var(--neon-cyan));
+  border-color: var(--neon-cyan);
+  color: var(--on-neon);
+  box-shadow: 0 0 0 0 rgba(255, 47, 185, 0.7);
   animation: glow 2.4s ease-in-out infinite;
 }
 
 @keyframes glow {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(242, 170, 155, 0.5);
+    box-shadow: 0 0 0 0 rgba(255, 47, 185, 0.5);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(242, 170, 155, 0);
+    box-shadow: 0 0 0 10px rgba(255, 47, 185, 0);
   }
 }
 
@@ -107,9 +112,9 @@ body {
   overflow-y: auto; /* en horizontal la tarjeta puede ser más alta que la pantalla */
   padding: 24px;
   background:
-    radial-gradient(circle at 20% 15%, rgba(199, 181, 232, 0.55), transparent 45%),
-    radial-gradient(circle at 85% 85%, rgba(242, 170, 155, 0.5), transparent 45%),
-    var(--lavender);
+    radial-gradient(circle at 20% 15%, rgba(255, 47, 185, 0.35), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(35, 229, 255, 0.28), transparent 45%),
+    var(--bg);
   z-index: 50;
   transition: opacity 1s ease;
 }
@@ -126,8 +131,8 @@ body {
   text-align: center;
   padding: 28px 24px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: 0 12px 40px rgba(48, 38, 61, 0.12);
+  background: rgba(27, 16, 51, 0.92);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
 }
 .gate__ornament {
   width: 96px;
@@ -160,17 +165,17 @@ body {
   min-height: var(--touch);
   padding: 10px 14px;
   font: inherit;
-  border: 2px solid var(--plum);
+  border: 2px solid var(--neon-cyan);
   border-radius: 12px;
-  background: #ffffff;
-  color: var(--plum);
+  background: var(--surface-2);
+  color: var(--text);
 }
 .gate__error {
   margin: 0;
   padding: 10px 14px;
   border-radius: 12px;
-  background: #fbe3dc;
-  color: var(--plum);
+  background: #4a1030;
+  color: var(--text);
   width: 100%;
 }
 
@@ -178,7 +183,7 @@ body {
 .museum {
   position: fixed;
   inset: 0;
-  background: var(--purple);
+  background: var(--surface);
 }
 .museum__scene {
   position: absolute;
@@ -203,8 +208,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: calc(10px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) 10px calc(14px + env(safe-area-inset-left));
-  background: rgba(248, 245, 252, 0.9);
-  border-bottom: 2px solid var(--salmon);
+  background: rgba(11, 7, 22, 0.92);
+  border-bottom: 2px solid var(--neon-cyan);
   z-index: 10;
 }
 .museum__title {
@@ -227,9 +232,10 @@ body {
   min-height: 40px;
   font: inherit;
   border-radius: 10px;
-  border: 2px solid var(--plum);
+  border: 2px solid var(--neon-cyan);
   padding: 4px 8px;
-  background: #ffffff;
+  background: var(--surface-2);
+  color: var(--text);
 }
 .museum__help {
   position: absolute;
@@ -240,8 +246,8 @@ body {
   margin: 0 auto;
   padding: 12px 16px;
   border-radius: var(--radius);
-  background: rgba(248, 245, 252, 0.94);
-  border-left: 6px solid var(--salmon);
+  background: rgba(11, 7, 22, 0.94);
+  border-left: 6px solid var(--neon-cyan);
   z-index: 10;
 }
 .museum__help p {
@@ -254,7 +260,8 @@ body {
   right: 12px;
   padding: 10px 14px;
   border-radius: var(--radius);
-  background: #ffffff;
+  background: var(--surface);
+  color: var(--text);
   z-index: 10;
 }
 
@@ -266,8 +273,8 @@ body {
   width: 128px;
   height: 128px;
   border-radius: 50%;
-  background: rgba(199, 181, 232, 0.45);
-  border: 2px solid var(--plum);
+  background: rgba(35, 229, 255, 0.22);
+  border: 2px solid var(--text);
   touch-action: none;
   z-index: 8;
 }
@@ -279,7 +286,7 @@ body {
   height: 56px;
   margin: -28px 0 0 -28px;
   border-radius: 50%;
-  background: var(--violet);
+  background: var(--neon-magenta);
   transition: transform 0.05s linear;
 }
 
@@ -293,8 +300,8 @@ body {
   justify-content: space-between;
   padding: 10px 12px;
   border-radius: var(--radius);
-  background: #ffffff;
-  border: 2px solid var(--salmon);
+  background: var(--surface);
+  border: 2px solid var(--neon-cyan);
 }
 .orientation p {
   margin: 0;
@@ -308,7 +315,7 @@ body {
   display: grid;
   place-items: center;
   padding: 16px;
-  background: rgba(48, 38, 61, 0.45);
+  background: rgba(0, 0, 0, 0.72);
   z-index: 40;
 }
 .dialog__card {
@@ -319,8 +326,8 @@ body {
   gap: 12px;
   padding: 20px;
   border-radius: 22px;
-  background: var(--lavender);
-  box-shadow: 0 16px 48px rgba(48, 38, 61, 0.3);
+  background: var(--surface);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
 }
 .dialog h2 {
   margin: 0;
@@ -336,8 +343,8 @@ body {
   max-height: 52vh;
   object-fit: contain;
   border-radius: 14px;
-  background: var(--gray-warm);
-  border: 3px solid var(--purple);
+  background: var(--surface-2);
+  border: 3px solid var(--neon-cyan);
 }
 .dialog__video--expanded {
   position: fixed;
@@ -361,7 +368,7 @@ body {
   margin: 0;
   padding: 10px 14px;
   border-radius: 12px;
-  background: #fbe3dc;
+  background: #4a1030;
 }
 .dialog__actions {
   display: flex;
@@ -375,7 +382,7 @@ body {
   inset: 0;
   overflow: auto;
   padding: 24px 16px 40px;
-  background: var(--lavender);
+  background: var(--bg);
   z-index: 30;
 }
 .catalog h2 {
@@ -401,9 +408,9 @@ body {
   padding: 8px 12px;
   text-align: left;
   font: inherit;
-  color: var(--plum);
-  background: #ffffff;
-  border: 2px solid var(--purple);
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--neon-cyan);
   border-radius: var(--radius);
   cursor: pointer;
 }
@@ -411,7 +418,7 @@ body {
   border-radius: 10px;
   flex: 0 0 auto;
   object-fit: cover;
-  background: var(--gray-warm);
+  background: var(--surface-2);
 }
 .catalog__label {
   display: grid;

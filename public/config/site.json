@@ -6,12 +6,8 @@
     "alt": "",
     "placeholder": true
   },
-  "theme": {
-    "purple": "#C7B5E8",
-    "salmon": "#F2AA9B",
-    "lavender": "#F8F5FC",
-    "plum": "#30263D",
-    "grayWarm": "#D5CFD5"
+  "room": {
+    "ceilingImage": { "src": "media/room/techo.jpg", "width": 1024, "height": 908 }
   },
   "entry": {
     "label": "Entrar al museo",

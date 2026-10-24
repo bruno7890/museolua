@@ -2,18 +2,30 @@
 
 ## Paleta
 
-Viene del encargo y está en `public/config/site.json` (`theme`).
+Decisión del propietario (2026-10): sala **oscura con neones fuertes**, sin salmón ni lila
+pastel. La paleta de la escena vive en `src/scene/palette.ts`; la de la interfaz, en las
+variables de `src/styles.css`. Ya no se configura desde `site.json`.
 
 | Color | Hex | Uso |
 |---|---|---|
-| Morado claro | `#C7B5E8` | Fondo de la escena, bordes de las tarjetas del catálogo |
-| Salmón | `#F2AA9B` | Acento: borde inferior de la barra, marcos, foco de los avisos |
-| Lavanda | `#F8F5FC` | Fondo de la interfaz, texto sobre violeta |
-| Violeta | `#654397` | Botón principal y joystick (texto blanco encima: > 4.5:1) |
-| Ciruela | `#30263D` | Texto principal y bordes de botones |
-| Gris cálido | `#D5CFD5` | Fondo de imágenes y vídeos antes de cargar |
+| Fondo | `#0B0716` | Fondo de la escena y de la interfaz |
+| Pared | `#1B1033` | Muros de la sala, tarjetas y paneles |
+| Suelo y secundario | `#221833` | Suelo de la sala, campos de texto |
+| Texto claro | `#F3EEFF` | Todo el texto (contraste ≥ 6:1 sobre el fondo) |
+| Neón magenta | `#FF2FB9` | Marcos, botón principal, joystick |
+| Neón cian | `#23E5FF` | Bordes, haces de luz, enlaces de la barra |
+| Neón amarillo | `#FFE94A` | Foco visible, tercer color de los marcos |
 
-Regla general: texto oscuro sobre pastel; el único botón con fondo saturado (violeta) lleva texto blanco.
+Regla general: texto claro sobre fondo oscuro y **letra oscura sobre los botones de neón**
+(la letra blanca sobre magenta solo llega a 3,3:1). Los tres neones rotan por los cuadros y
+por los paneles, y son los mismos que giran como haces de luz desde el techo.
+
+### Luces de fiesta
+
+Tres haces translúcidos giran desde el techo. No son focos reales: la sala no usa iluminación
+(MeshBasicMaterial) para no encarecer el render en el móvil. La animación va a 10 pasos por
+segundo y se pausa mientras el panel o el catálogo tapan la sala; con `prefers-reduced-motion`
+los haces se quedan quietos.
 
 ## Tipografía y ritmo
 

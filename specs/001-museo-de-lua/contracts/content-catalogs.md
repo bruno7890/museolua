@@ -21,7 +21,8 @@ interface SiteConfig {
   schemaVersion: 1;
   title: string;                 // "Museo de Lua"
   ornament: { src: string; alt: string; placeholder: boolean }; // SVG
-  theme: { purple: string; salmon: string; lavender: string; plum: string; grayWarm: string };
+  // Imagen que cubre el techo (opcional). La paleta vive en el código (src/scene/palette.ts).
+  room: { ceilingImage?: { src: string; width: number; height: number } };
   entry: { label: string; transitionMs: number; reducedTransitionMs: number };
   access: { algorithm: "SHA-256"; salt: string; verifier: string; informalNotice: string };
   speech: {
@@ -44,7 +45,7 @@ interface SiteConfig {
 }
 ```
 
-Validaciones: `theme.*` son colores hexadecimales `#RRGGBB`; `rate` en [0.5, 2];
+Validaciones: `room.ceilingImage`, si está, apunta a un archivo existente con dimensiones positivas; `rate` en [0.5, 2];
 `pitch` en [0, 2]; `volume` en [0, 1]; `fov` en [30, 90]; `pitchLimitDegrees` en [0, 60];
 `speech.lang === "es"`; `fallbackLangs` solo códigos `es-*`; `access.verifier` es hex de 64 caracteres.
 

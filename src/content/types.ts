@@ -8,7 +8,8 @@ export interface SiteConfig {
   schemaVersion: 1;
   title: string;
   ornament: { src: string; alt: string; placeholder: boolean };
-  theme: { purple: string; salmon: string; lavender: string; plum: string; grayWarm: string };
+  /** Elementos de la sala que se editan desde el catálogo. */
+  room: { ceilingImage?: { src: string; width: number; height: number } };
   entry: { label: string; transitionMs: number; reducedTransitionMs: number };
   access: { algorithm: "SHA-256"; salt: string; verifier: string; informalNotice: string };
   speech: {

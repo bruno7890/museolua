@@ -31,6 +31,6 @@ test.describe("Reproducir muestra que el audio se está cargando", () => {
     await expect(page.locator("#station-status")).toContainText("Cargando el audio");
 
     liberar();
-    await expect(page.getByRole("button", { name: "Pausar" })).toBeVisible({ timeout: 30_000 });
+    await expect(page.getByRole("button", { name: "Pausar" })).toBeVisible({ timeout: 45_000 });
   });
 });

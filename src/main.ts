@@ -38,6 +38,7 @@ async function loadJson<T>(path: string): Promise<T> {
 /** Rutas declaradas en los catálogos. La existencia real se comprueba con validate:content y al cargar. */
 function declaredPaths(site: SiteConfig, stations: StationCatalog, decor: DecorationCatalog): Set<string> {
   const paths = new Set<string>([site.ornament.src]);
+  if (site.room.ceilingImage) paths.add(site.room.ceilingImage.src);
   for (const s of stations.stations) {
     paths.add(s.image.src);
     paths.add(s.media.src);
@@ -224,6 +225,8 @@ function main(): void {
         decorations: runtime.decorations,
         baseUrl: BASE,
         pixelRatio: quality.pixelRatio,
+        // Con el panel o el catálogo abiertos, la sala no se ve: no se animan las luces.
+        isLightsPaused: () => (panel?.isOpen() ?? false) || !catalogSection.hidden || document.hidden,
         onContextLost: () => {
           coordinator?.onVisibilityHidden();
           showFallback("Se perdió la conexión gráfica. Puedes usar el catálogo o recargar la página.");

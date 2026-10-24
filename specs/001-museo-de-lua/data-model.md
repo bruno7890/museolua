@@ -9,7 +9,7 @@ y estado en memoria de la visita. Los campos y reglas exactos están en
 ## Entidades persistidas (catálogos)
 
 ### MuseumConfig (`public/config/site.json`)
-- `title`, `ornament` (emblema SVG provisional), `theme` (cinco colores)
+- `title`, `ornament` (emblema SVG provisional), `room` (imagen del techo; la paleta vive en el código)
 - `entry`: `label`, `transitionMs` (1000), `reducedTransitionMs` (150)
 - `access`: `hashAlgorithm` ("SHA-256"), `salt`, `verifier` (hex). Nunca la clave literal
 - `speech`: `preferredVoiceName?`, `lang` ("es"), `fallbackLangs` (["es-EC","es-419"]), `rate` 0.95, `pitch` 1, `volume` 0.7, `startTimeoutMs` 4000, `maxUtteranceMs` 60000, `msPerCharacter` 80, `baseEndTimeoutMs` 2000

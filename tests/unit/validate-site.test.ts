@@ -13,10 +13,16 @@ describe("validateSiteConfig", () => {
     expect(validateSiteConfig(siteFixture(), demo).issues).toEqual([]);
   });
 
-  it("rechaza colores que no son hexadecimales #RRGGBB", () => {
+  it("rechaza una imagen de techo cuyo archivo no existe", () => {
     const site = siteFixture();
-    site.theme.purple = "purple";
-    expect(codes(site)).toContain("color");
+    site.room = { ceilingImage: { src: "media/room/no-existe.jpg", width: 1024, height: 908 } };
+    expect(codes(site)).toContain("missing-file");
+  });
+
+  it("rechaza una imagen de techo sin dimensiones", () => {
+    const site = siteFixture();
+    site.room = { ceilingImage: { src: "media/room/techo.jpg", width: 0, height: 908 } };
+    expect(codes(site)).toContain("number");
   });
 
   it("valida rangos de voz", () => {

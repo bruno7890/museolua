@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-// Contraste WCAG 2 (relación de luminancias). Los colores de fondo con transparencia
-// se mezclan con el fondo que tienen debajo, en el peor caso de la escena.
+// Contraste WCAG 2 de la interfaz (tema oscuro con neones). Los fondos con transparencia
+// se mezclan con lo que tienen debajo, en el peor caso. La paleta de la sala 3D se prueba
+// en scene-palette.test.ts.
 
 const lum = (hex: string): number => {
   const canales = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
@@ -20,30 +21,33 @@ function contraste(a: string, b: string): number {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-const PLUM = "#30263d";
-const LAVENDER = "#f8f5fc";
-const VIOLET = "#654397";
-const WHITE = "#ffffff";
+const BG = "#0b0716";
+const SURFACE = "#1b1033";
+const TEXT = "#f3eeff";
+const MAGENTA = "#ff2fb9";
+const CYAN = "#23e5ff";
+const ON_NEON = "#0b0716";
 
-describe("contraste de la paleta (WCAG 2 AA, texto normal ≥ 4.5:1)", () => {
-  it("texto principal sobre la entrada, con sus degradados", () => {
-    expect(contraste(PLUM, LAVENDER)).toBeGreaterThanOrEqual(4.5);
-    expect(contraste(PLUM, mezcla("#c7b5e8", LAVENDER, 0.55))).toBeGreaterThanOrEqual(4.5);
-    expect(contraste(PLUM, mezcla("#f2aa9b", LAVENDER, 0.5))).toBeGreaterThanOrEqual(4.5);
+describe("contraste de la interfaz (WCAG 2 AA, texto normal ≥ 4,5:1)", () => {
+  it("texto claro sobre el fondo y sobre los paneles", () => {
+    expect(contraste(TEXT, BG)).toBeGreaterThanOrEqual(4.5);
+    expect(contraste(TEXT, SURFACE)).toBeGreaterThanOrEqual(4.5);
   });
 
   it("barra y ayuda del museo sobre la escena, en el peor caso de color", () => {
-    for (const color of ["#654397", "#c7b5e8", "#f2aa9b", "#d5cfd5"]) {
-      expect(contraste(PLUM, mezcla(LAVENDER, color, 0.9))).toBeGreaterThanOrEqual(4.5);
+    for (const color of [MAGENTA, CYAN, "#ffe94a", "#2a1b4d"]) {
+      expect(contraste(TEXT, mezcla(BG, color, 0.92))).toBeGreaterThanOrEqual(4.5);
     }
   });
 
-  it("botones principales con texto blanco", () => {
-    expect(contraste(WHITE, VIOLET)).toBeGreaterThanOrEqual(4.5);
-    expect(contraste(WHITE, "#7e57b5")).toBeGreaterThanOrEqual(4.5);
+  it("botones de neón: letra oscura, nunca blanca", () => {
+    expect(contraste(ON_NEON, MAGENTA)).toBeGreaterThanOrEqual(4.5);
+    expect(contraste(ON_NEON, CYAN)).toBeGreaterThanOrEqual(4.5);
+    // La letra blanca sobre magenta no llegaría: por eso no se usa.
+    expect(contraste("#ffffff", MAGENTA)).toBeLessThan(4.5);
   });
 
-  it("mensajes de error sobre su fondo", () => {
-    expect(contraste(PLUM, "#fbe3dc")).toBeGreaterThanOrEqual(4.5);
+  it("mensajes de error sobre su fondo oscuro", () => {
+    expect(contraste(TEXT, "#4a1030")).toBeGreaterThanOrEqual(4.5);
   });
 });

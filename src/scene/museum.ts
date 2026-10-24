@@ -7,6 +7,8 @@ import { stepPosition, ROOM_BOUNDS, type Rect } from "../controls/navigation.ts"
 import type { InputSnapshot } from "../controls/input.ts";
 import { approachTargetFor, clampPitch, stepApproach, type ApproachTarget, type Pose } from "./approach.ts";
 import { buildRoom, roomObstacles } from "./room.ts";
+import { createLightRig, type LightRig } from "./light-rig.ts";
+import { PALETTE } from "./palette.ts";
 import { buildStationFrames, addFramesToGroup, type FramesHandle } from "./station-frames.ts";
 import { buildDecor, type DecorHandle } from "./decor.ts";
 
@@ -19,6 +21,8 @@ export interface MuseumOptions {
   pixelRatio: number;
   onFrameLoaded?: () => void;
   onContextLost?: () => void;
+  /** true cuando una ventana tapa la sala: se pausan las luces (no se gasta en balde). */
+  isLightsPaused?: () => boolean;
 }
 
 export interface Museum {
@@ -39,6 +43,7 @@ export interface Museum {
 }
 
 const EYE_HEIGHT_DEFAULT = 0;
+const PASO_LUCES = 1 / 10; // segundos entre pasos de la animación de luces
 
 export function createMuseum(opts: MuseumOptions): Museum {
   const { site } = opts;
@@ -49,13 +54,18 @@ export function createMuseum(opts: MuseumOptions): Museum {
   renderer.setSize(opts.canvas.clientWidth || window.innerWidth, opts.canvas.clientHeight || window.innerHeight, false);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(site.theme.lavender);
+  scene.background = new THREE.Color(PALETTE.background);
 
   const camera = new THREE.PerspectiveCamera(nav.fov, 1, 1, 4000);
   camera.rotation.order = "YXZ";
 
-  const room = buildRoom();
+  const room = buildRoom({ ceilingImage: site.room?.ceilingImage, baseUrl: opts.baseUrl });
   scene.add(room.group);
+
+  // Luces de fiesta: giran despacio; se quedan quietas si el sistema pide movimiento reducido.
+  const lights: LightRig = createLightRig(PALETTE.neon);
+  lights.setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  scene.add(lights.group);
 
   const frames: FramesHandle = buildStationFrames(opts.stations, opts.baseUrl, () => {
     dirty = true;
@@ -76,6 +86,7 @@ export function createMuseum(opts: MuseumOptions): Museum {
   let arrival: string | null = null;
   let approachingId: string | null = null;
   let dirty = true;
+  let acumuladoLuces = 0;
   const obstacles: Rect[] = roomObstacles();
 
   const onLost = (e: Event) => {
@@ -199,6 +210,15 @@ export function createMuseum(opts: MuseumOptions): Museum {
         dirty = true;
       }
 
+      // Las luces giran a ~15 pasos por segundo, no en cada fotograma: basta para verlas
+      // moverse y ahorra batería en el móvil (la escena solo se redibuja cuando cambia).
+      acumuladoLuces += step;
+      if (!(opts.isLightsPaused?.() ?? false) && acumuladoLuces >= PASO_LUCES) {
+        lights.update(acumuladoLuces);
+        acumuladoLuces = 0;
+        if (!lights.reducedMotion) dirty = true;
+      }
+
       if (dirty) {
         applyCamera();
       }
@@ -218,6 +238,7 @@ export function createMuseum(opts: MuseumOptions): Museum {
       opts.canvas.removeEventListener("webglcontextlost", onLost, false);
       frames.dispose();
       decor.dispose();
+      lights.dispose();
       room.dispose();
       renderer.dispose();
     },

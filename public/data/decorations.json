@@ -25,7 +25,7 @@
       "kind": "wall-image",
       "image": {
         "src": "media/decor/panel-01.jpg",
-        "alt": "Ilustración de escenario de karaoke con la anfitriona y un micrófono",
+        "alt": "Logotipo de Lua: letras claras sobre fondo oscuro, con una luna y una estrella",
         "credit": "Ilustración aportada por el propietario",
         "placeholder": false
       },
@@ -39,7 +39,7 @@
       "kind": "wall-image",
       "image": {
         "src": "media/decor/panel-02.jpg",
-        "alt": "Ilustración de granja con la anfitriona en un escenario de heno y animales",
+        "alt": "Escena de títeres: una mesa de trabajo con máquina de escribir y personajes de peluche al fondo",
         "credit": "Ilustración aportada por el propietario",
         "placeholder": false
       },

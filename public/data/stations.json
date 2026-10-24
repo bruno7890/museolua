@@ -10,7 +10,7 @@
       "description": "Marcador de demostración: sustituir por la obra real.",
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
-      "image": { "src": "media/images/01.jpg", "alt": "Marcador de demostración 01", "width": 1024, "height": 308 },
+      "image": { "src": "media/images/01.jpg", "alt": "Ilustración de escenario de karaoke con la anfitriona y un micrófono", "width": 1024, "height": 985 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la primera estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/01.mp3", "mime": "audio/mpeg", "durationSeconds": 142 },
       "placement": { "wall": "left", "position": 200, "width": 35, "centerY": 0 }
@@ -24,7 +24,7 @@
       "description": "Marcador de demostración: sustituir por la obra real.",
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
-      "image": { "src": "media/images/02.jpg", "alt": "Marcador de demostración 02", "width": 764, "height": 1024 },
+      "image": { "src": "media/images/02.jpg", "alt": "Ilustración de granja con la anfitriona en un escenario de heno y animales", "width": 1024, "height": 985 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la segunda estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/02.mp3", "mime": "audio/mpeg", "durationSeconds": 125 },
       "placement": { "wall": "left", "position": 50, "width": 20, "centerY": 0 }

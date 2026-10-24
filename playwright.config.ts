@@ -8,9 +8,9 @@ export default defineConfig({
   timeout: 90_000,
   expect: { timeout: 10_000 },
   fullyParallel: true,
-  // La escena 3D se renderiza por software en CI: demasiados navegadores a la vez agotan la CPU
-  // y provocan tiempos de espera falsos.
-  workers: process.env["CI"] ? 2 : 3,
+  // La escena 3D se renderiza por software (aquí y en CI): con tres navegadores a la vez la CPU
+  // se agota, la carga del audio se queda colgada y aparecen tiempos de espera falsos.
+  workers: 2,
   retries: process.env["CI"] ? 1 : 0,
   reporter: [["list"]],
   use: {

@@ -100,6 +100,9 @@ function loadTexture(
       tex.colorSpace = THREE.SRGBColorSpace;
       textures.push(tex);
       mat.map = tex;
+      // La textura se multiplica por el color del material: se pone blanco para que la
+      // ilustración se vea tal cual, sin teñirse con el color de la pared.
+      mat.color.set(0xffffff);
       mat.needsUpdate = true;
       if (suelo) {
         // Alfombra: encaja la ilustración en el rectángulo sin deformarla (fit: contain).

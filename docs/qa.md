@@ -7,7 +7,7 @@ Registro de qué está verificado y qué queda pendiente. Actualiza esta tabla e
 | Comprobación | Comando | Resultado |
 |---|---|---|
 | Tipos | `npm run typecheck` | Correcto |
-| Unitarias | `npm test` | 149 pruebas, 21 suites, todas pasan |
+| Unitarias | `npm test` | 151 pruebas, 21 suites, todas pasan |
 | Contenido (demo) | `npm run validate:content` | Correcto |
 | Contenido (publicación) | `npm run validate:content -- --mode=publish` | **Falla a propósito**: quedan marcadores `placeholder: true` |
 | Build | `npm run build` | Correcto: 574 kB de JS (149 kB gzip), 7,7 kB de CSS, 36 archivos |
@@ -134,3 +134,5 @@ Pendiente de medir en el móvil real: el contraste bajo la luz del día, que no 
 | 2026-10-24 | El propietario pidió una sala oscura con neones fuertes en lugar de lila y salmón, su imagen grande en el techo y luces de fiesta | Decisión de diseño del propietario | Paleta oscura/neón en la sala y en la interfaz; `room.ceilingImage` cubre el techo; tres haces de neón giran desde arriba. La paleta sale de `site.json` (`theme`) y pasa a `src/scene/palette.ts` | `tests/unit/scene-palette.test.ts`, `room-ceiling.test.ts`, `light-rig.test.ts`, `contrast.test.ts`; contraste con axe en E2E |
 | 2026-10-24 | Con la imagen del techo, la entrada se quedaba en «Cargando el museo…» | Las rutas de `room.ceilingImage` no contaban como declaradas al arrancar | Se añaden a `declaredPaths` en `src/main.ts` | E2E 50/50 |
 | 2026-10-24 | Las luces animadas dejaban la escena redibujándose en cada fotograma: las E2E tardaban cuatro veces más y algunas agotaban el tiempo | La animación pedía un fotograma nuevo siempre | La animación va a 10 pasos por segundo y se pausa mientras el panel o el catálogo tapan la sala | E2E 50/50 en 1,8 min |
+| 2026-10-24 | Los paneles de pared se veían oscuros y teñidos por el violeta de la sala | La textura se multiplica por el color del material, que seguía siendo el oscuro del marcador | Al cargar la imagen, el material pasa a blanco, así que la ilustración se ve tal cual | `tests/unit/decor-color.test.ts` (antes fallaba) |
+| 2026-10-24 | La prueba de Reproducir fallaba de forma intermitente y el audio se quedaba cargando | Con tres navegadores a la vez la CPU se agota (la escena se dibuja por software) y `play()` no llega a resolver | La suite E2E usa dos procesos en local y en CI, como ya hacía en CI | E2E 50/50 en dos corridas seguidas |

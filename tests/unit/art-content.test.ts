@@ -26,6 +26,17 @@ describe("decoraciones con ilustraciones", () => {
     expect(piso[0]!.image.placeholder).toBe(false);
   });
 
+  it("cada panel cae dentro de la sala (no más allá de una esquina)", () => {
+    // Límites interiores: la pared frontal y la trasera recortan los laterales.
+    const ROOM = { left: -369, right: 49, front: -229, back: 269 };
+    for (const d of paneles) {
+      const { wall, position, width } = d.placement!;
+      const h = width / 2;
+      const dentro = position - h >= ROOM.front && position + h <= ROOM.back;
+      expect(dentro, `${d.id} en ${wall} ${position}`).toBe(true);
+    }
+  });
+
   it("cada decoración apunta a un archivo que existe en public/", () => {
     for (const d of decorations.decorations) {
       expect(existsSync(path.join(PUBLIC, d.image.src)), d.image.src).toBe(true);

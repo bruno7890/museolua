@@ -16,6 +16,9 @@ const WALLS: readonly Wall[] = ["left", "right", "front", "back"];
 const EXPECTED_DISTRIBUTION: Record<Wall, number> = { left: 3, right: 3, front: 2, back: 2 };
 const WALL_HALF_LENGTH = 300;
 const MIN_GAP = 8;
+// Límites interiores de la sala: la pared frontal y la trasera recortan los laterales
+// (coincide con WALL_COORD de src/scene/approach.ts).
+const ROOM = { left: -369, right: 49, front: -229, back: 269 } as const;
 const MAX_NARRATION = 600;
 
 type Obj = Record<string, unknown>;
@@ -329,11 +332,18 @@ function checkVideoWalls(c: Collector, items: { index: number; type: string; pla
   }
 }
 
+/** true si la pieza se sale de la sala por los bordes (más allá de una esquina). */
+function fueraDeLaSala(wall: Wall, position: number, width: number): boolean {
+  const h = width / 2;
+  if (wall === "left" || wall === "right") return position - h < ROOM.front || position + h > ROOM.back;
+  return position - h < ROOM.left || position + h > ROOM.right;
+}
+
 function checkSpacing(c: Collector, items: { index: number; placement: StationPlacement }[]): void {
   for (const it of items) {
-    const { position, width } = it.placement;
-    if (Math.abs(position) + width / 2 > WALL_HALF_LENGTH)
-      c.add(`stations[${it.index}].placement`, "bounds", "La obra queda fuera del muro.");
+    const { wall, position, width } = it.placement;
+    if (fueraDeLaSala(wall, position, width))
+      c.add(`stations[${it.index}].placement`, "bounds", "La obra queda fuera de la sala.");
   }
   for (let a = 0; a < items.length; a++) {
     for (let b = a + 1; b < items.length; b++) {
@@ -406,9 +416,13 @@ export function validateDecorations(
       if (!isObj(pl)) c.add(`${p}.placement`, "shape", "El panel requiere placement.");
       else {
         oneOf(c, `${p}.placement.wall`, pl.wall, ["left", "right"] as const);
-        num(c, `${p}.placement.position`, pl.position, { min: -WALL_HALF_LENGTH, max: WALL_HALF_LENGTH });
+        num(c, `${p}.placement.position`, pl.position);
         num(c, `${p}.placement.width`, pl.width, { positive: true });
         num(c, `${p}.placement.centerY`, pl.centerY);
+        if (typeof pl.position === "number" && typeof pl.width === "number" && (pl.wall === "left" || pl.wall === "right")) {
+          if (fueraDeLaSala(pl.wall, pl.position, pl.width))
+            c.add(`${p}.placement`, "bounds", "El panel queda fuera de la sala.");
+        }
         if (pl.wall === "left" || pl.wall === "right") {
           const wall = pl.wall;
           const pos = pl.position;

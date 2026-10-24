@@ -20,6 +20,12 @@ describe("validateDecorations", () => {
     expect(codes(catalog)).toContain("count");
   });
 
+  it("rechaza un panel colocado fuera de la esquina de la sala", () => {
+    const catalog = decorationsFixture();
+    catalog.decorations[1]!.placement = { wall: "left", position: -240, width: 24, centerY: 20 };
+    expect(codes(catalog)).toContain("bounds");
+  });
+
   it("nunca permite decoraciones interactivas", () => {
     const catalog = decorationsFixture();
     (catalog.decorations[1] as { interactive: boolean }).interactive = true;

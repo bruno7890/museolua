@@ -97,7 +97,7 @@ export function decorationsFixture(): DecorationCatalog {
       decorWall("decor-gon-left-02", "left", -120, 24),
       decorWall("decor-gon-right-01", "right", -170, 24),
       decorWall("decor-gon-right-02", "right", 60, 24),
-      decorWall("decor-gon-left-03", "left", -240, 24),
+      decorWall("decor-gon-left-03", "left", -60, 24),
     ],
   };
 }

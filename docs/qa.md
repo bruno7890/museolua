@@ -7,7 +7,7 @@ Registro de qué está verificado y qué queda pendiente. Actualiza esta tabla e
 | Comprobación | Comando | Resultado |
 |---|---|---|
 | Tipos | `npm run typecheck` | Correcto |
-| Unitarias | `npm test` | 135 pruebas, 17 suites, todas pasan |
+| Unitarias | `npm test` | 137 pruebas, 17 suites, todas pasan |
 | Contenido (demo) | `npm run validate:content` | Correcto |
 | Contenido (publicación) | `npm run validate:content -- --mode=publish` | **Falla a propósito**: quedan marcadores `placeholder: true` |
 | Build | `npm run build` | Correcto: 573 kB de JS (148 kB gzip), 7,5 kB de CSS, 35 archivos |

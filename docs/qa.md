@@ -7,11 +7,11 @@ Registro de qué está verificado y qué queda pendiente. Actualiza esta tabla e
 | Comprobación | Comando | Resultado |
 |---|---|---|
 | Tipos | `npm run typecheck` | Correcto |
-| Unitarias | `npm test` | 127 pruebas, 16 suites, todas pasan |
+| Unitarias | `npm test` | 131 pruebas, 17 suites, todas pasan |
 | Contenido (demo) | `npm run validate:content` | Correcto |
 | Contenido (publicación) | `npm run validate:content -- --mode=publish` | **Falla a propósito**: quedan marcadores `placeholder: true` |
 | Build | `npm run build` | Correcto: 571 kB de JS (148 kB gzip), 5,9 kB de CSS, 34 archivos |
-| Presupuesto | `npm run check:budget` | Carga esencial 919 KiB ≤ 5 MiB; medios 2,00 MiB |
+| Presupuesto | `npm run check:budget` | Carga esencial 1,55 MiB ≤ 5 MiB; medios 6,79 MiB |
 | E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 25/25 |
 | E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 25/25 |
 | E2E en subdirectorio | `npm run test:e2e:subdir` | 25/25 |
@@ -26,7 +26,7 @@ npm run typecheck && npm test && npm run validate:content && npm run build && np
 
 | Medición | Valor | Cómo se obtuvo |
 |---|---|---|
-| Carga esencial sin medios | 919 KiB (148 KiB solo JS) | `npm run check:budget` |
+| Carga esencial sin medios | 1,55 MiB (148 KiB solo JS, el resto son portadas y paneles) | `npm run check:budget` |
 | Build completo con medios de demostración | 2,64 MiB (34 archivos) | `npm run check:budget` |
 | Archivos más pesados | `assets/index-*.js` 555 KiB, `media/video/04.mp4` 644 KiB | `npm run check:budget` |
 | Memoria de texturas | No medida | Requiere un dispositivo Android real; pendiente |

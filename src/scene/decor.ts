@@ -3,7 +3,10 @@
 
 import * as THREE from "three";
 import type { Decoration } from "../content/types.ts";
-import { OFFSET_IMAGE, heightFor, placeOnWall } from "./wall-placement.ts";
+import { OFFSET_BORDER, OFFSET_IMAGE, heightFor, placeOnWall } from "./wall-placement.ts";
+
+const MOLDURA = 3; // mismo ancho que la moldura de los cuadros (station-frames.ts)
+const MOLDURA_COLOR = 0x30263d; // ciruela de la paleta
 
 export interface DecorHandle {
   group: THREE.Group;
@@ -49,8 +52,16 @@ export function buildDecor(
       mesh.name = d.id;
       mesh.userData = { decorationId: d.id, interactive: false };
       placeOnWall(mesh, wall, position, centerY, OFFSET_IMAGE);
-      group.add(mesh);
-      loadTexture(baseUrl, d.image.src, mat, mesh, geo, textures, loader, width);
+      // Moldura de galería detrás del panel, con la misma paleta que los cuadros.
+      const moldura = new THREE.Mesh(
+        new THREE.PlaneGeometry(width + MOLDURA * 2, width * 1.5 + MOLDURA * 2),
+        new THREE.MeshBasicMaterial({ color: MOLDURA_COLOR }),
+      );
+      moldura.name = `moldura:${d.id}`;
+      moldura.userData = { interactive: false };
+      placeOnWall(moldura, wall, position, centerY, OFFSET_BORDER);
+      group.add(moldura, mesh);
+      loadTexture(baseUrl, d.image.src, mat, mesh, geo, textures, loader, width, moldura);
     }
   }
 
@@ -78,6 +89,7 @@ function loadTexture(
   textures: THREE.Texture[],
   loader: THREE.TextureLoader,
   wallWidth?: number,
+  moldura?: THREE.Mesh,
 ): void {
   loader.load(
     new URL(src, baseUrl).href,
@@ -87,12 +99,16 @@ function loadTexture(
       mat.map = tex;
       mat.needsUpdate = true;
       if (wallWidth !== undefined) {
-        // Paneles: conserva la proporción real de la ilustración.
+        // Paneles: conserva la proporción real de la ilustración; la moldura la sigue.
         const img = tex.image as { width?: number; height?: number } | undefined;
         if (img && img.width && img.height) {
           const h = heightFor(wallWidth, img.width, img.height);
           geo.dispose();
           mesh.geometry = new THREE.PlaneGeometry(wallWidth, h);
+          if (moldura) {
+            moldura.geometry.dispose();
+            moldura.geometry = new THREE.PlaneGeometry(wallWidth + MOLDURA * 2, h + MOLDURA * 2);
+          }
         }
       }
     },

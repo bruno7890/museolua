@@ -46,6 +46,21 @@ describe("colección de la sala", () => {
     expect(count).toEqual({ left: 3, right: 3, front: 2, back: 2 });
   });
 
+  it("cada cuadro tiene molduras alrededor de la imagen", () => {
+    const frames = buildStationFrames(stations, BASE, () => {}, new FakeLoader());
+    for (const f of frames.frames) {
+      const borde = f.mesh.userData.border as THREE.Group;
+      expect(borde, f.stationId).toBeInstanceOf(THREE.Group);
+      // Moldura exterior y acento interior: dos capas por encima de la imagen.
+      expect(borde.children, f.stationId).toHaveLength(2);
+      const anchoImagen = (f.mesh.geometry as THREE.PlaneGeometry).parameters.width;
+      for (const capa of borde.children as THREE.Mesh[]) {
+        expect((capa.geometry as THREE.PlaneGeometry).parameters.width, f.stationId).toBeGreaterThan(anchoImagen);
+      }
+    }
+    frames.dispose();
+  });
+
   it("solo los marcos de estación son seleccionables", () => {
     const frames = buildStationFrames(stations, BASE, () => {}, new FakeLoader());
     const decor = buildDecor(decorationsFixture().decorations, BASE, new FakeLoader());

@@ -21,6 +21,10 @@ export interface FramesHandle {
 }
 
 const PLACEHOLDER = 0xf8f5fc;
+const MOLDURA = 3; // ancho de la moldura exterior, en unidades de la sala
+const MOLDURA_COLOR = 0x30263d; // ciruela de la paleta
+const ACENTO = 1.5; // franja salmón entre la moldura y la imagen
+const ACENTO_COLOR = 0xf2aa9b; // salmón de la paleta
 
 export function buildStationFrames(
   stations: readonly Station[],
@@ -38,10 +42,18 @@ export function buildStationFrames(
     const w = s.placement.width;
     const h = heightFor(w, s.image.width, s.image.height);
 
-    const borderGeo = new THREE.PlaneGeometry(w + 3, h + 3);
-    const borderMat = new THREE.MeshBasicMaterial({ color: COLORS.wall });
-    const border = new THREE.Mesh(borderGeo, borderMat);
-    placeOnWall(border, s.placement.wall, s.placement.position, s.placement.centerY, OFFSET_BORDER);
+    // Molduras de galería: capa exterior morada y acento salmón justo alrededor de la imagen.
+    const molduraGeo = new THREE.PlaneGeometry(w + MOLDURA * 2, h + MOLDURA * 2);
+    const molduraMat = new THREE.MeshBasicMaterial({ color: MOLDURA_COLOR });
+    const molduraExterior = new THREE.Mesh(molduraGeo, molduraMat);
+    const acentoGeo = new THREE.PlaneGeometry(w + ACENTO * 2, h + ACENTO * 2);
+    const acentoMat = new THREE.MeshBasicMaterial({ color: ACENTO_COLOR });
+    const acento = new THREE.Mesh(acentoGeo, acentoMat);
+    const border = new THREE.Group();
+    border.name = `moldura:${s.id}`;
+    placeOnWall(molduraExterior, s.placement.wall, s.placement.position, s.placement.centerY, OFFSET_BORDER);
+    placeOnWall(acento, s.placement.wall, s.placement.position, s.placement.centerY, OFFSET_BORDER + 0.1);
+    border.add(molduraExterior, acento);
 
     const imgGeo = new THREE.PlaneGeometry(w, h);
     const imgMat = new THREE.MeshBasicMaterial({ color: PLACEHOLDER, side: THREE.DoubleSide });
@@ -50,8 +62,8 @@ export function buildStationFrames(
     mesh.userData = { stationId: s.id };
     placeOnWall(mesh, s.placement.wall, s.placement.position, s.placement.centerY, OFFSET_IMAGE);
 
-    geometries.push(borderGeo, imgGeo);
-    materials.push(borderMat, imgMat);
+    geometries.push(molduraGeo, acentoGeo, imgGeo);
+    materials.push(molduraMat, acentoMat, imgMat);
 
     const frame: StationFrame = { stationId: s.id, station: s, mesh, loadState: "pending" };
     frames.push(frame);

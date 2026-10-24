@@ -24,10 +24,10 @@
       "enabled": true,
       "kind": "wall-image",
       "image": {
-        "src": "media/decor/gon-left-01.png",
-        "alt": "Ilustración decorativa (marcador)",
-        "credit": "Marcador local, pendiente de ilustración de Gon Freecss",
-        "placeholder": true
+        "src": "media/decor/panel-01.jpg",
+        "alt": "Ilustración de escenario de karaoke con la anfitriona y un micrófono",
+        "credit": "Ilustración aportada por el propietario",
+        "placeholder": false
       },
       "placement": { "wall": "left", "position": -20, "width": 24, "centerY": 20 },
       "fit": "contain",
@@ -38,10 +38,10 @@
       "enabled": true,
       "kind": "wall-image",
       "image": {
-        "src": "media/decor/gon-left-02.png",
-        "alt": "Ilustración decorativa (marcador)",
-        "credit": "Marcador local, pendiente de ilustración de Hunter x Hunter",
-        "placeholder": true
+        "src": "media/decor/panel-02.jpg",
+        "alt": "Ilustración de granja con la anfitriona en un escenario de heno y animales",
+        "credit": "Ilustración aportada por el propietario",
+        "placeholder": false
       },
       "placement": { "wall": "left", "position": -120, "width": 24, "centerY": 20 },
       "fit": "contain",
@@ -52,10 +52,10 @@
       "enabled": true,
       "kind": "wall-image",
       "image": {
-        "src": "media/decor/gon-right-01.png",
-        "alt": "Ilustración decorativa (marcador)",
-        "credit": "Marcador local, pendiente de ilustración de Gon Freecss",
-        "placeholder": true
+        "src": "media/decor/panel-03.jpg",
+        "alt": "Ilustración de fiesta de Halloween con calabazas y casas encantadas",
+        "credit": "Ilustración aportada por el propietario",
+        "placeholder": false
       },
       "placement": { "wall": "right", "position": -170, "width": 24, "centerY": 20 },
       "fit": "contain",
@@ -66,10 +66,10 @@
       "enabled": true,
       "kind": "wall-image",
       "image": {
-        "src": "media/decor/gon-right-02.png",
-        "alt": "Ilustración decorativa (marcador)",
-        "credit": "Marcador local, pendiente de ilustración de Hunter x Hunter",
-        "placeholder": true
+        "src": "media/decor/panel-04.jpg",
+        "alt": "Ilustración navideña con árbol, regalos y la anfitriona en el escenario",
+        "credit": "Ilustración aportada por el propietario",
+        "placeholder": false
       },
       "placement": { "wall": "right", "position": 60, "width": 24, "centerY": 20 },
       "fit": "contain",

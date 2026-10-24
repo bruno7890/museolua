@@ -11,6 +11,7 @@
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
       "image": { "src": "media/images/01.jpg", "alt": "Ilustración de escenario de karaoke con la anfitriona y un micrófono", "width": 1024, "height": 985 },
+      "backdrop": { "src": "media/fondos/fondo-6.jpg", "width": 800, "height": 769 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la primera estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/01.mp3", "mime": "audio/mpeg", "durationSeconds": 142 },
       "placement": { "wall": "left", "position": 200, "width": 35, "centerY": 0 }
@@ -25,6 +26,7 @@
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
       "image": { "src": "media/images/02.jpg", "alt": "Ilustración de granja con la anfitriona en un escenario de heno y animales", "width": 1024, "height": 985 },
+      "backdrop": { "src": "media/fondos/fondo-7.jpg", "width": 800, "height": 769 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la segunda estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/02.mp3", "mime": "audio/mpeg", "durationSeconds": 125 },
       "placement": { "wall": "left", "position": 50, "width": 20, "centerY": 0 }
@@ -39,6 +41,7 @@
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
       "image": { "src": "media/images/03.jpg", "alt": "Marcador de demostración 03", "width": 1024, "height": 984 },
+      "backdrop": { "src": "media/fondos/fondo-8.jpg", "width": 800, "height": 769 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la tercera estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/03.mp3", "mime": "audio/mpeg", "durationSeconds": 61 },
       "placement": { "wall": "left", "position": -160, "width": 28, "centerY": 0 }
@@ -68,6 +71,7 @@
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
       "image": { "src": "media/images/05.png", "alt": "Marcador de demostración 05", "width": 1024, "height": 1024 },
+      "backdrop": { "src": "media/fondos/fondo-4.jpg", "width": 800, "height": 769 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la quinta estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/05.mp3", "mime": "audio/mpeg", "durationSeconds": 6 },
       "placement": { "wall": "right", "position": -50, "width": 50, "centerY": 0 }
@@ -82,6 +86,7 @@
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
       "image": { "src": "media/images/06.png", "alt": "Marcador de demostración 06", "width": 1024, "height": 1024 },
+      "backdrop": { "src": "media/fondos/fondo-5.jpg", "width": 800, "height": 769 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la sexta estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/06.mp3", "mime": "audio/mpeg", "durationSeconds": 6 },
       "placement": { "wall": "right", "position": 200, "width": 21, "centerY": 0 }
@@ -96,6 +101,7 @@
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
       "image": { "src": "media/images/07.png", "alt": "Marcador de demostración 07", "width": 1024, "height": 1024 },
+      "backdrop": { "src": "media/fondos/fondo-1.jpg", "width": 800, "height": 769 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la séptima estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/07.mp3", "mime": "audio/mpeg", "durationSeconds": 6 },
       "placement": { "wall": "front", "position": -80, "width": 47, "centerY": 0 }
@@ -110,6 +116,7 @@
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
       "image": { "src": "media/images/08.png", "alt": "Marcador de demostración 08", "width": 1024, "height": 1024 },
+      "backdrop": { "src": "media/fondos/fondo-2.jpg", "width": 800, "height": 769 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la octava estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/08.mp3", "mime": "audio/mpeg", "durationSeconds": 6 },
       "placement": { "wall": "front", "position": 0, "width": 36, "centerY": 0 }
@@ -139,6 +146,7 @@
       "credit": "Generado localmente para pruebas",
       "placeholder": true,
       "image": { "src": "media/images/10.png", "alt": "Marcador de demostración 10", "width": 1024, "height": 1024 },
+      "backdrop": { "src": "media/fondos/fondo-3.jpg", "width": 800, "height": 769 },
       "narration": { "mode": "browser", "text": "Introducción de demostración para la décima estación.", "policy": "first-visit" },
       "media": { "src": "media/audio/10.mp3", "mime": "audio/mpeg", "durationSeconds": 6 },
       "placement": { "wall": "back", "position": -170, "width": 25, "centerY": 0 }

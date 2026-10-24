@@ -251,6 +251,14 @@ export function validateStations(input: unknown, opts: ValidateOptions): Validat
       num(c, `${p}.image.height`, raw.image.height, { positive: true });
     } else c.add(`${p}.image`, "shape", "Se esperaba un objeto.");
 
+    if (raw.backdrop !== undefined) {
+      if (isObj(raw.backdrop)) {
+        relPath(c, `${p}.backdrop.src`, raw.backdrop.src, opts.existingPaths);
+        num(c, `${p}.backdrop.width`, raw.backdrop.width, { positive: true });
+        num(c, `${p}.backdrop.height`, raw.backdrop.height, { positive: true });
+      } else c.add(`${p}.backdrop`, "shape", "Se esperaba un objeto.");
+    }
+
     if (isObj(raw.narration)) {
       if (raw.narration.mode !== "browser") c.add(`${p}.narration.mode`, "enum", "Debe ser browser.");
       if (typeof raw.narration.text !== "string") c.add(`${p}.narration.text`, "shape", "Se esperaba texto (puede estar vacío).");
@@ -363,7 +371,7 @@ export function validateDecorations(
   }
   schemaVersion(c, input);
   const list: unknown[] = input.decorations;
-  if (list.length !== 5) c.add("decorations", "count", `Se esperaban 5 decoraciones (alfombra y cuatro paneles) y hay ${list.length}.`);
+  if (list.length !== 6) c.add("decorations", "count", `Se esperaban 6 decoraciones (alfombra y cinco paneles) y hay ${list.length}.`);
 
   const ids = new Set<string>();
   list.forEach((raw, i) => {

@@ -125,4 +125,25 @@ describe("validateStations", () => {
   it("rechaza una entrada que no es un objeto", () => {
     expect(codes(null)).toContain("shape");
   });
+
+  it("acepta una pantalla de fondo válida en una estación de audio", () => {
+    const catalog = withStations((s) => {
+      s[0]!.backdrop = { src: "media/fondos/fondo-1.jpg", width: 800, height: 769 };
+    });
+    expect(validateStations(catalog, { ...demo, existingPaths: new Set([...existingPathsFixture(), "media/fondos/fondo-1.jpg"]) }).issues).toEqual([]);
+  });
+
+  it("rechaza una pantalla de fondo cuyo archivo no existe", () => {
+    const catalog = withStations((s) => {
+      s[0]!.backdrop = { src: "media/fondos/no-existe.jpg", width: 800, height: 769 };
+    });
+    expect(codes(catalog)).toContain("missing-file");
+  });
+
+  it("rechaza una pantalla de fondo sin dimensiones", () => {
+    const catalog = withStations((s) => {
+      s[0]!.backdrop = { src: "media/fondos/fondo-1.jpg", width: 0, height: 769 };
+    });
+    expect(codes(catalog)).toContain("number");
+  });
 });

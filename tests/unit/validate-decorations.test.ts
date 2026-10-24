@@ -10,11 +10,11 @@ function codes(input: unknown): string[] {
 }
 
 describe("validateDecorations", () => {
-  it("acepta alfombra y cuatro paneles de referencia", () => {
+  it("acepta alfombra y cinco paneles de referencia", () => {
     expect(validateDecorations(decorationsFixture(), demo).issues).toEqual([]);
   });
 
-  it("exige exactamente cinco decoraciones", () => {
+  it("exige exactamente seis decoraciones (alfombra y cinco paneles)", () => {
     const catalog = decorationsFixture();
     catalog.decorations.pop();
     expect(codes(catalog)).toContain("count");

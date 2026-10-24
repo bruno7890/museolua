@@ -12,7 +12,8 @@ public/
 └── media/
     ├── branding/ornament.svg # emblema de la portada
     ├── images/               # una portada por estación (PNG/JPG/WebP)
-    ├── decor/                # texturas de decoración
+    ├── decor/                # alfombra y paneles de pared
+    ├── fondos/               # pantallas de fondo de las estaciones (opcional)
     ├── audio/                # una canción por estación de audio
     ├── video/                # un vídeo por estación de vídeo
     └── captions/             # subtítulos opcionales (.vtt)
@@ -47,6 +48,8 @@ Recomendaciones para que la visita vaya fluida en móvil:
   "credit": "Autoría · Fuente · Licencia",
   "placeholder": false,         // true = marcador de demostración
   "image": { "src": "media/images/01.png", "alt": "Descripción de la imagen", "width": 1024, "height": 1024 },
+  // Opcional: pantalla de fondo tras la portada. La portada se dibuja encima, al 60 % del ancho.
+  "backdrop": { "src": "media/fondos/fondo-1.jpg", "width": 800, "height": 769 },
   "narration": {
     "mode": "browser",          // "browser" = voz del navegador | "text" = solo texto
     "text": "Lo que se lee en voz alta al llegar al cuadro.",
@@ -60,7 +63,7 @@ Recomendaciones para que la visita vaya fluida en móvil:
 
 **`placement` decide dónde aparece el cuadro en la sala.** `wall` admite `left`, `right`, `front` y `back`. `position` es la distancia al centro de la pared en unidades de la referencia; `width` el ancho del marco. Reparto actual: tres cuadros a la izquierda, tres a la derecha, dos al frente y dos al fondo.
 
-`public/data/decorations.json` sigue el mismo patrón (`id`, `kind`, `src`, `placement`, `placeholder`).
+`public/data/decorations.json` sigue el mismo patrón (`id`, `kind`, `src`, `placement`, `placeholder`). Tiene exactamente seis entradas: la alfombra de entrada (`kind: "floor-image"`, con `transform`) y cinco paneles de pared (`kind: "wall-image"`, con `placement`). Los paneles caen en los muros laterales y no pueden solaparse con un cuadro del mismo muro.
 
 `public/config/site.json` ajusta la clave, la voz, los textos de bienvenida y los parámetros de navegación. `navigation.eyeHeight` está en `0` por coherencia con la escala de la referencia: súbelo a `1.6` si prefieres la altura en metros del encargo.
 

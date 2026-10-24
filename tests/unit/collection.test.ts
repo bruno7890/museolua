@@ -61,6 +61,21 @@ describe("colección de la sala", () => {
     frames.dispose();
   });
 
+  it("una estación de audio con pantalla de fondo muestra la portada encima de ella", () => {
+    const conFondo = stations.map((s) =>
+      s.type === "audio" ? { ...s, backdrop: { src: "media/fondos/fondo-1.jpg", width: 800, height: 769 } } : s,
+    );
+    const handle = buildStationFrames(conFondo, BASE, () => {}, new FakeLoader());
+    const f = handle.frames.find((x) => x.station.backdrop !== undefined)!;
+    expect(f.backdrop).toBeInstanceOf(THREE.Mesh);
+    expect(handle.pickables).toContain(f.backdrop);
+    expect(f.backdrop!.userData["stationId"]).toBe(f.stationId);
+    const anchoPantalla = (f.backdrop!.geometry as THREE.PlaneGeometry).parameters.width;
+    const anchoPortada = (f.mesh.geometry as THREE.PlaneGeometry).parameters.width;
+    expect(anchoPortada).toBeLessThan(anchoPantalla);
+    handle.dispose();
+  });
+
   it("solo los marcos de estación son seleccionables", () => {
     const frames = buildStationFrames(stations, BASE, () => {}, new FakeLoader());
     const decor = buildDecor(decorationsFixture().decorations, BASE, new FakeLoader());
@@ -70,7 +85,7 @@ describe("colección de la sala", () => {
       expect(typeof pickable.userData["stationId"]).toBe("string");
     }
     const decorIds = decor.group.children.map((c) => c.userData["decorationId"]);
-    expect(decorIds.filter((id) => id !== undefined)).toHaveLength(5);
+    expect(decorIds.filter((id) => id !== undefined)).toHaveLength(6);
     for (const child of decor.group.children) {
       expect(child.userData["stationId"]).toBeUndefined();
       expect(child.userData["interactive"]).toBe(false);

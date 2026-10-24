@@ -63,6 +63,8 @@ interface Station {
   credit: string;
   placeholder: boolean;
   image: { src: string; alt: string; width: number; height: number };
+  // FR-041: pantalla de fondo opcional. La portada se dibuja encima, más pequeña.
+  backdrop?: { src: string; width: number; height: number };
   narration: { mode: "browser"; text: string; speechText?: string; policy: "first-visit" };
   media: { src: string; mime: "audio/mpeg" | "audio/wav" | "video/mp4"; durationSeconds?: number; poster?: string };
   captions?: { src: string; lang: string };       // FR-040: opcional, solo vídeo
@@ -81,6 +83,8 @@ Validaciones:
   (`height_frame = width_frame × height / width`).
 - Ningún par `(wall, position)` repetido; `|position_a − position_b| ≥ width_a/2 + width_b/2 + 8`
   en el mismo muro (margen de separación).
+- `backdrop` es opcional; si está, `width`/`height` > 0 y `src` debe existir. Con pantalla de
+  fondo, el ancho del marco es el del fondo y la portada se reduce al 60 % de ese ancho.
 
 ## `data/decorations.json`
 
@@ -88,7 +92,7 @@ Validaciones:
 interface DecorationCatalog { schemaVersion: 1; decorations: Decoration[] }
 
 interface Decoration {
-  id: "decor-rug-entry" | "decor-gon-left-01" | "decor-gon-left-02" | "decor-gon-right-01" | "decor-gon-right-02";
+  id: "decor-rug-entry" | "decor-gon-left-01" | "decor-gon-left-02" | "decor-gon-left-03" | "decor-gon-right-01" | "decor-gon-right-02";
   enabled: boolean;
   kind: "floor-image" | "wall-image";
   image: { src: string; alt: string; credit: string; placeholder: boolean };
@@ -99,7 +103,7 @@ interface Decoration {
 }
 ```
 
-Validaciones: exactamente 5 decoraciones (1 alfombra + 4 paneles); los paneles caen en un
+Validaciones: exactamente 6 decoraciones (1 alfombra + 5 paneles); los paneles caen en un
 muro lateral sin solaparse con una estación del mismo muro (margen 8 unidades); `interactive`
 debe ser `false`.
 

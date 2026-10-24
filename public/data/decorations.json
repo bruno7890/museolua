@@ -6,10 +6,10 @@
       "enabled": true,
       "kind": "floor-image",
       "image": {
-        "src": "media/decor/rug-entry.png",
-        "alt": "Alfombra de entrada (marcador)",
-        "credit": "Marcador local, sustituir por ilustración propia",
-        "placeholder": true
+        "src": "media/decor/piso-145.jpg",
+        "alt": "Ilustración de una piñata en el suelo, de colores",
+        "credit": "Ilustración aportada por el propietario",
+        "placeholder": false
       },
       "transform": {
         "position": [-80, -39.9, 180],
@@ -24,8 +24,8 @@
       "enabled": true,
       "kind": "wall-image",
       "image": {
-        "src": "media/decor/panel-01.jpg",
-        "alt": "Logotipo de Lua: letras claras sobre fondo oscuro, con una luna y una estrella",
+        "src": "media/decor/pared-01.jpg",
+        "alt": "Ilustración de un personaje de cabello rosado con una estrella en el párpado, sobre fondo morado",
         "credit": "Ilustración aportada por el propietario",
         "placeholder": false
       },
@@ -38,8 +38,8 @@
       "enabled": true,
       "kind": "wall-image",
       "image": {
-        "src": "media/decor/panel-02.jpg",
-        "alt": "Escena de títeres: una mesa de trabajo con máquina de escribir y personajes de peluche al fondo",
+        "src": "media/decor/pared-02.jpg",
+        "alt": "Ilustración de dos personajes con las manos extendidas hacia quien mira, sobre fondo oscuro",
         "credit": "Ilustración aportada por el propietario",
         "placeholder": false
       },
@@ -48,12 +48,26 @@
       "interactive": false
     },
     {
+      "id": "decor-gon-left-03",
+      "enabled": true,
+      "kind": "wall-image",
+      "image": {
+        "src": "media/decor/pared-03.jpg",
+        "alt": "Ilustración de dos personajes sentados en una colina mirando un atardecer",
+        "credit": "Ilustración aportada por el propietario",
+        "placeholder": false
+      },
+      "placement": { "wall": "left", "position": -240, "width": 24, "centerY": 20 },
+      "fit": "contain",
+      "interactive": false
+    },
+    {
       "id": "decor-gon-right-01",
       "enabled": true,
       "kind": "wall-image",
       "image": {
-        "src": "media/decor/panel-03.jpg",
-        "alt": "Ilustración de fiesta de Halloween con calabazas y casas encantadas",
+        "src": "media/decor/pared-04.jpg",
+        "alt": "Ilustración de una niña sonriente con vestido tradicional de colores",
         "credit": "Ilustración aportada por el propietario",
         "placeholder": false
       },
@@ -66,8 +80,8 @@
       "enabled": true,
       "kind": "wall-image",
       "image": {
-        "src": "media/decor/panel-04.jpg",
-        "alt": "Ilustración navideña con árbol, regalos y la anfitriona en el escenario",
+        "src": "media/decor/pared-05.jpg",
+        "alt": "Ilustración de un grupo de personajes reunidos, todos mirando al frente",
         "credit": "Ilustración aportada por el propietario",
         "placeholder": false
       },

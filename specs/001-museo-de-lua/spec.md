@@ -263,7 +263,7 @@ los archivos de contenido; validar y preparar una entrega sin publicarla.
   teletransportar y el cierre DEBE restaurar recorrido y foco coherentes. (US3-A2, US4-A5)
 - **FR-023**: Distribución inicial: tres estaciones en cada lateral, dos al fondo y
   dos atrás, con vídeos separados y aproximaciones libres. (US3-A3)
-- **FR-024**: Alfombra y cuatro paneles decorativos DEBEN estar separados del contenido
+- **FR-024**: Alfombra y cinco paneles decorativos DEBEN estar separados del contenido
   interactivo, no tener narración ni tapar cuadros ni producir parpadeo. (US3-A3, EC-11)
 - **FR-025**: Identidad DEBE ser amistosa con título y adornos sustituibles, paleta
   consolidada y proporciones de imagen intactas; sin mensajes de pareja ni decoración
@@ -306,6 +306,9 @@ los archivos de contenido; validar y preparar una entrega sin publicarla.
   ni contenido; al cambiarla durante US1-A4 la visita mantiene controles y selección.
 - **FR-040**: Vídeos con subtítulos aportados DEBEN permitir activarlos; su ausencia
   NO DEBE generar pistas rotas ni bloquear reproducción. (US2-A7)
+- **FR-041**: Una estación DEBE poder declarar una pantalla de fondo opcional; la portada
+  se dibuja encima, más pequeña, dentro del mismo marco. La pantalla de fondo NO DEBE
+  sustituir a la portada ni alterar la selección de la estación. (US3-A3)
 
 ### Key Entities *(include if feature involves data)*
 

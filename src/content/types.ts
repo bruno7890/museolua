@@ -54,6 +54,8 @@ export interface Station {
   credit: string;
   placeholder: boolean;
   image: { src: string; alt: string; width: number; height: number };
+  /** Pantalla de fondo detrás de la portada (opcional; solo estaciones de audio). */
+  backdrop?: { src: string; width: number; height: number };
   narration: { mode: "browser"; text: string; speechText?: string; policy: "first-visit" };
   media: { src: string; mime: MediaMime; durationSeconds?: number; poster?: string };
   captions?: { src: string; lang: string };

@@ -1,6 +1,6 @@
 import type { DecorationCatalog, SiteConfig, StationCatalog } from "../../src/content/types.ts";
 
-// Catálogo de referencia válido: diez estaciones (8 audio, 2 vídeo), cinco decoraciones.
+// Catálogo de referencia válido: diez estaciones (8 audio, 2 vídeo), seis decoraciones (alfombra y cinco paneles).
 // Distribución 3/3/2/2 (D-09); vídeos en muros distintos (estaciones 04 y 09).
 
 const HEX64 = "0".repeat(64);
@@ -97,6 +97,7 @@ export function decorationsFixture(): DecorationCatalog {
       decorWall("decor-gon-left-02", "left", -120, 24),
       decorWall("decor-gon-right-01", "right", -170, 24),
       decorWall("decor-gon-right-02", "right", 60, 24),
+      decorWall("decor-gon-left-03", "left", -240, 24),
     ],
   };
 }

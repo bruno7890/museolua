@@ -43,7 +43,7 @@ export function buildDecor(
       mesh.position.set(px, py, pz);
       mesh.rotation.set(rx, ry, rz);
       group.add(mesh);
-      loadTexture(baseUrl, d.image.src, mat, mesh, geo, textures, loader);
+      loadTexture(baseUrl, d.image.src, mat, mesh, geo, textures, loader, undefined, undefined, [w, h]);
     } else if (d.kind === "wall-image" && d.placement) {
       const { wall, position, width, centerY } = d.placement;
       const geo = new THREE.PlaneGeometry(width, width * 1.5);
@@ -90,6 +90,7 @@ function loadTexture(
   loader: THREE.TextureLoader,
   wallWidth?: number,
   moldura?: THREE.Mesh,
+  suelo?: [number, number],
 ): void {
   loader.load(
     new URL(src, baseUrl).href,
@@ -98,6 +99,16 @@ function loadTexture(
       textures.push(tex);
       mat.map = tex;
       mat.needsUpdate = true;
+      if (suelo) {
+        // Alfombra: encaja la ilustración en el rectángulo sin deformarla (fit: contain).
+        const img = tex.image as { width?: number; height?: number } | undefined;
+        if (img && img.width && img.height) {
+          const [caja, profundidad] = suelo;
+          const escala = Math.min(caja / img.width, profundidad / img.height);
+          geo.dispose();
+          mesh.geometry = new THREE.PlaneGeometry(img.width * escala, img.height * escala);
+        }
+      }
       if (wallWidth !== undefined) {
         // Paneles: conserva la proporción real de la ilustración; la moldura la sigue.
         const img = tex.image as { width?: number; height?: number } | undefined;

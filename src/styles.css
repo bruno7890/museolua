@@ -524,7 +524,7 @@ body {
   }
   .museum__controls {
     flex-wrap: nowrap;
-    gap: 6px;
+    gap: 4px;
   }
   .museum__controls .btn {
     min-height: 44px;

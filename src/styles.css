@@ -523,13 +523,14 @@ body {
     display: none;
   }
   .museum__controls {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 6px;
   }
   .museum__controls .btn {
     min-height: 44px;
     padding: 6px 12px;
     font-size: 0.9rem;
+    white-space: nowrap;
   }
   .museum__quality {
     font-size: 0.85rem;

@@ -16,8 +16,8 @@ test.describe("estación desde el catálogo (mismas reglas que el cuadro)", () =
     await page.locator('[data-station-id="estacion-01"]').click();
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText("Canción de demostración 01");
-    await expect(dialog).toContainText("Introducción de demostración para la primera estación.");
+    await expect(dialog).toContainText("Canción de Lua 01");
+    await expect(dialog).toContainText("Canción número uno, silencio y escúchala.");
   });
 
   test("Play no inicia la reproducción hasta que el usuario lo pide", async ({ page }) => {
@@ -40,6 +40,21 @@ test.describe("estación desde el catálogo (mismas reglas que el cuadro)", () =
     await expect(page.getByRole("dialog")).toBeHidden();
   });
 
+  test("al pasar del vídeo 04 al 09 se descarga el fotograma anterior y aparece su portada", async ({ page }) => {
+    const video = page.locator("#station-video");
+    await page.getByRole("button", { name: "Catálogo" }).click();
+    await page.locator('[data-station-id="estacion-04"]').click();
+    await page.getByRole("button", { name: "Reproducir" }).click();
+    await expect(video).toHaveAttribute("src", /media\/video\/04\.mp4/);
+
+    await page.locator("#station-close").click();
+    await page.getByRole("button", { name: "Catálogo" }).click();
+    await page.locator('[data-station-id="estacion-09"]').click();
+
+    expect(await video.getAttribute("src")).toBeNull();
+    await expect(video).toHaveAttribute("poster", /media\/images\/video9\.jpg/);
+  });
+
   test("silenciar impide hablar en la siguiente estación", async ({ page }) => {
     await page.locator("#btn-mute").click();
     await expect(page.locator("#btn-mute")).toHaveAttribute("aria-pressed", "true");
@@ -50,18 +65,13 @@ test.describe("estación desde el catálogo (mismas reglas que el cuadro)", () =
     expect((await speakCalls(page)).length).toBe(before);
   });
 
-  test("el vídeo ofrece su pista de subtítulos y la estación de audio no", async ({ page }) => {
+  test("no anuncia una pista de subtítulos de demostración como si fuera definitiva", async ({ page }) => {
     await page.getByRole("button", { name: "Catálogo" }).click();
     await page.locator('[data-station-id="estacion-04"]').click();
     const track = page.locator('#station-video track[kind="captions"]');
-    await expect(track).toHaveCount(1);
-    await expect(track).toHaveAttribute("srclang", "es");
-    // La pista se carga de verdad: readyState ≥ 1 significa que el archivo se ha descargado.
-    await expect
-      .poll(async () => track.evaluate((el) => (el as HTMLTrackElement).readyState), { timeout: 15_000 })
-      .toBeGreaterThan(0);
+    await expect(track).toHaveCount(0);
 
-    // Al abrir una estación de audio, la pista del vídeo anterior desaparece.
+    // Al abrir una estación de audio tampoco debe quedar una pista de subtítulos.
     await page.locator("#station-close").click();
     await page.getByRole("button", { name: "Catálogo" }).click();
     await page.locator('[data-station-id="estacion-01"]').click();

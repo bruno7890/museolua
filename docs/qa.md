@@ -7,14 +7,14 @@ Registro de qué está verificado y qué queda pendiente. Actualiza esta tabla e
 | Comprobación | Comando | Resultado |
 |---|---|---|
 | Tipos | `npm run typecheck` | Correcto |
-| Unitarias | `npm test` | 151 pruebas, 21 suites, todas pasan |
+| Unitarias | `npm test` | 157 pruebas, 24 suites, todas pasan |
 | Contenido (demo) | `npm run validate:content` | Correcto |
-| Contenido (publicación) | `npm run validate:content -- --mode=publish` | **Falla a propósito**: quedan marcadores `placeholder: true` |
-| Build | `npm run build` | Correcto: 574 kB de JS (149 kB gzip), 7,7 kB de CSS, 36 archivos |
-| Presupuesto | `npm run check:budget` | Carga esencial 2,23 MiB ≤ 5 MiB; medios 6,79 MiB |
-| E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 25/25 |
-| E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 25/25 |
-| E2E en subdirectorio | `npm run test:e2e:subdir` | 25/25 |
+| Contenido (publicación) | `npm run validate:content -- --mode=publish` | Correcto |
+| Build | `npm run build` | Correcto: 574 kB de JS (149 kB gzip), 7,7 kB de CSS, 38 archivos |
+| Presupuesto | `npm run check:budget` | Carga esencial 2,36 MiB ≤ 5 MiB; medios bajo demanda 25,07 MiB |
+| E2E escritorio | `npm run test:e2e -- --project=chromium-desktop` | 26/26 |
+| E2E móvil emulado | `npm run test:e2e -- --project=chromium-android` | 26/26 |
+| E2E en subdirectorio | `npm run test:e2e:subdir` | 26/26 |
 
 La batería completa que exige la constitución es:
 
@@ -26,9 +26,9 @@ npm run typecheck && npm test && npm run validate:content && npm run build && np
 
 | Medición | Valor | Cómo se obtuvo |
 |---|---|---|
-| Carga esencial sin medios | 2,23 MiB (149 KiB solo JS; el resto son portadas, paneles y la imagen del techo) | `npm run check:budget` |
-| Build completo con medios | 9,02 MiB (36 archivos) | `npm run check:budget` |
-| Archivos más pesados | `media/audio/01.mp3` 2,23 MiB, `media/video/04.mp4` 644 KiB | `npm run check:budget` |
+| Carga esencial sin medios | 2,36 MiB (149 KiB solo JS; el resto son portadas, paneles y la imagen del techo) | `npm run check:budget` |
+| Build completo con medios | 27,43 MiB (38 archivos) | `npm run check:budget` |
+| Archivos más pesados | `media/video/09.mp4` 8,14 MiB, `media/video/04.mp4` 6,54 MiB | `npm run check:budget` |
 | Memoria de texturas | No medida | Requiere un dispositivo Android real; pendiente |
 
 Los medios se piden bajo demanda: la visita no descarga ningún audio ni vídeo hasta que la visitante lo reproduce.
@@ -124,7 +124,7 @@ Pendiente de medir en el móvil real: el contraste bajo la luz del día, que no 
 | 2026-10-21 | Pulsar «Continuar» antes de que cargara el contenido se descartaba en silencio | El botón queda deshabilitado con el aviso «Cargando el museo…» y la pulsación espera al runtime |
 | 2026-10-21 | Llegar a un cuadro cancelaba la canción que la visitante acababa de poner | La introducción automática no interrumpe una reproducción en curso |
 | 2026-10-21 | Sin WebGL 2, al cerrar el panel de una estación el catálogo quedaba oculto y sin forma de volver a abrirlo | Al cerrar el panel, la alternativa 2D vuelve a mostrar el catálogo |
-| 2026-10-21 | Los vídeos no offerían subtítulos y la pista de la estación anterior se acumulaba | Cada estación con vídeo declara su pista `captions`; al abrir otra, se limpian las pistas |
+| 2026-10-21 | Los vídeos no ofrecían subtítulos y la pista de la estación anterior se acumulaba | El reproductor admite pistas `captions` aportadas y las limpia al cambiar de estación; en 2026-11 se retiraron las pistas de demostración que no corresponden a los vídeos reales |
 | 2026-10-21 | Al abrir el sitio por la IP de la red local desde el móvil, la comprobación de la clave fallaba: `crypto.subtle` no existe fuera de un contexto seguro y la entrada se quedaba bloqueada en «Comprobando la clave…» | Respaldo de SHA-256 en TypeScript para contextos no seguros; además, la entrada nunca se deja bloqueada sin explicación (ver `EC-12`) |
 | 2026-10-21 | En horizontal en el móvil la barra ocupaba casi media pantalla, el joystick tapaba la ayuda y, en la pantalla de entrada, el botón «Entrar al museo» quedaba fuera de la pantalla | Barra de una línea (botones de 44 px, título oculto), joystick en la esquina, ayuda a su derecha; en horizontal la entrada usa dos columnas (clave a la derecha) y `viewport-fit=cover` con zonas seguras | `tests/e2e/landscape.spec.ts` (740×360: barra ≤ 90 px, botones dentro de la pantalla en una fila, entrada sin desplazamiento, sin solape joystick-ayuda); captura comprobada |
 | 2026-10-22 | Al ampliar un vídeo y salir de pantalla completa con el sistema (Atrás, Esc o el botón del navegador), el vídeo seguía a pantalla completa tapando el diálogo: solo se veía el vídeo, sin botones | La clase de ampliación no seguía al estado real de pantalla completa | `ampliar` usa la API del navegador y un listener de `fullscreenchange` quita la ampliación al salir; sin API, ampliación solo visual | `tests/e2e/video-expand.spec.ts` (sale de pantalla completa por API y comprueba que el diálogo y sus botones vuelven a verse); reproducido antes del arreglo |
@@ -136,3 +136,7 @@ Pendiente de medir en el móvil real: el contraste bajo la luz del día, que no 
 | 2026-10-24 | Las luces animadas dejaban la escena redibujándose en cada fotograma: las E2E tardaban cuatro veces más y algunas agotaban el tiempo | La animación pedía un fotograma nuevo siempre | La animación va a 10 pasos por segundo y se pausa mientras el panel o el catálogo tapan la sala | E2E 50/50 en 1,8 min |
 | 2026-10-24 | Los paneles de pared se veían oscuros y teñidos por el violeta de la sala | La textura se multiplica por el color del material, que seguía siendo el oscuro del marcador | Al cargar la imagen, el material pasa a blanco, así que la ilustración se ve tal cual | `tests/unit/decor-color.test.ts` (antes fallaba) |
 | 2026-10-24 | La prueba de Reproducir fallaba de forma intermitente y el audio se quedaba cargando | Con tres navegadores a la vez la CPU se agota (la escena se dibuja por software) y `play()` no llega a resolver | La suite E2E usa dos procesos en local y en CI, como ya hacía en CI | E2E 50/50 en dos corridas seguidas |
+| 2026-11-24 | Las estaciones 05–08, 10, 04 y 09 aún usaban medios de demostración; las pistas VTT afirmaban que los vídeos no tenían audio | Los medios reales acababan de llegar con nombres numéricos | Copiados sin recodificar a `media/audio/NN.mp3` y `media/video/NN.mp4`; catálogo actualizado con duraciones; pistas VTT de demostración retiradas de las estaciones | `tests/unit/art-content.test.ts`; E2E 50/50 y subdir 25/25; decodificación completa de los 10 archivos con ffmpeg |
+| 2026-11-25 | Al abrir el vídeo 09 quedaba visible el último fotograma del 04; además faltaban sus portadas | Se reutiliza un único elemento `<video>`; al cambiar solo se actualizaba el póster, mientras la fuente anterior seguía cargada | Al abrir otra estación se pausa y descarga la fuente anterior (sin precargar la nueva); las portadas `video4.jpg` y `video9.jpg` ya están asignadas | `tests/unit/shared-video.test.ts`, `tests/unit/art-content.test.ts`, E2E 52/52 y subdir 26/26 |
+| 2026-11-25 | Textos de bienvenida y estaciones aún eran de demostración | Pendiente recibir los textos del propietario | Se actualizaron solo bienvenida, títulos e introducciones que indicó; las descripciones y demás campos en blanco se conservaron | `tests/unit/content-copy.test.ts`, E2E 52/52 y subdir 26/26 |
+| 2026-11-25 | Los medios reales no tenían su procedencia correcta en el catálogo ni en los avisos | El crédito aún decía «Generado localmente para pruebas» | Registrada la autoría confirmada por la propietaria para los audios 05–08 y 10, los vídeos 04 y 09 y sus portadas | `tests/unit/art-content.test.ts`; validador de publicación correcto |

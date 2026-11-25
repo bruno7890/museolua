@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { DecorationCatalog, StationCatalog } from "../../src/content/types.ts";
@@ -71,9 +71,51 @@ describe("portadas de las estaciones", () => {
     }
   });
 
-  it("las estaciones de vídeo siguen con su marcador", () => {
+  it("cada audio tiene su archivo real y duración actualizada", () => {
+    for (const s of audio) {
+      const mediaPath = path.join(PUBLIC, s.media.src);
+      expect(existsSync(mediaPath), s.media.src).toBe(true);
+      expect(statSync(mediaPath).size, s.media.src).toBeGreaterThan(500_000);
+      expect(s.media.durationSeconds, s.id).toBeGreaterThan(30);
+    }
+  });
+
+  it("cada vídeo tiene su portada real correspondiente", () => {
+    for (const [id, nombre] of [
+      ["estacion-04", "video4.jpg"],
+      ["estacion-09", "video9.jpg"],
+    ]) {
+      const station = stations.stations.find((s) => s.id === id)!;
+      expect(station.image.src, id).toBe(`media/images/${nombre}`);
+      expect(station.image.alt.length, id).toBeGreaterThan(10);
+      expect(existsSync(path.join(PUBLIC, station.image.src)), station.image.src).toBe(true);
+    }
+  });
+
+  it("cada vídeo tiene su archivo real, duración actualizada y no está marcado como marcador", () => {
     for (const s of stations.stations.filter((x) => x.type === "video")) {
-      expect(s.placeholder, s.id).toBe(true);
+      const mediaPath = path.join(PUBLIC, s.media.src);
+      expect(existsSync(mediaPath), s.media.src).toBe(true);
+      expect(statSync(mediaPath).size, s.media.src).toBeGreaterThan(1_000_000);
+      expect(s.media.durationSeconds, s.id).toBeGreaterThan(15);
+      expect(s.placeholder, s.id).toBe(false);
+    }
+  });
+
+  it("documenta la autoría confirmada de los medios reales que se publicarán", () => {
+    const ids = [
+      "estacion-04",
+      "estacion-05",
+      "estacion-06",
+      "estacion-07",
+      "estacion-08",
+      "estacion-09",
+      "estacion-10",
+    ];
+
+    for (const id of ids) {
+      const station = stations.stations.find((item) => item.id === id)!;
+      expect(station.credit, id).toBe("Obra original de la propietaria del museo");
     }
   });
 });

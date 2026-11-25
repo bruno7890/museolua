@@ -44,15 +44,21 @@ sistema (`system-ui`, `-apple-system`, `Segoe UI`, `Roboto`).
 ## Medios de demostración
 
 Los archivos de `public/media/` marcados como `placeholder: true` son
-**generados localmente** (formas de color, tonos sintetizados y fotogramas
-simples) con `scripts/generate-demo-media.ts`. No contienen obras de terceros
-y no se distribuyen como contenido final.
+generados localmente con `scripts/generate-demo-media.ts` y no se distribuyen
+como contenido final.
 
 El emblema de `public/media/branding/ornament.svg` es un marcador geométrico
 original de este repositorio.
 
-## Contenido definitivo
+## Medios originales de la propietaria
 
-Cuando se incorporen las obras reales, cada estación debe declarar su
-procedencia en el campo `credit` del catálogo `public/data/stations.json` y
-ampliar este documento con los avisos correspondientes.
+La propietaria del museo confirma que son de su autoría y autoriza su
+publicación y distribución en este sitio:
+
+- Audio de las estaciones 05, 06, 07, 08 y 10 (`public/media/audio/`).
+- Vídeos de las estaciones 04 y 09 (`public/media/video/`).
+- Portadas `video4.jpg` y `video9.jpg` (`public/media/images/`).
+
+El campo `credit` de esas estaciones en `public/data/stations.json` registra
+esta procedencia. Los demás medios de demostración no se presentan como obras
+finales.

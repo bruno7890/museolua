@@ -4,7 +4,7 @@
   "ornament": {
     "src": "media/branding/ornament.svg",
     "alt": "",
-    "placeholder": true
+    "placeholder": false
   },
   "room": {
     "ceilingImage": { "src": "media/room/techo.jpg", "width": 1024, "height": 908 }
@@ -32,10 +32,11 @@
     "msPerCharacter": 80
   },
   "welcome": {
-    "touchText": "Toca un cuadro para acercarte y escuchar su introducción. Puedes mover el recorrido con el joystick de la izquierda y girar arrastrando en la derecha.",
+    "touchText": "Toca un cuadro para acercarte y escuchar su introducción.",
     "desktopText": "Haz clic en un cuadro para acercarte. Muévete con WASD o las flechas y gira arrastrando con el ratón.",
     "speechTouch": "Bienvenida al Museo de Lua. Toca un cuadro para acercarte. Usa el joystick para moverte y arrastra para mirar alrededor.",
-    "speechDesktop": "Bienvenida al Museo de Lua. Haz clic en un cuadro para acercarte. Muévete con las flechas y gira arrastrando con el ratón."
+    "speechDesktop": "Bienvenida al Museo de Lua. Por favor, lávate las patas antes de entrar. Después, haz clic en un cuadro para acercarte. Muévete con las flechas y gira arrastrando con el ratón.",
+    "speechTouch": "Bienvenida al Museo de Lua. Por favor, lávate las patas antes de entrar. Y después toca un cuadro para acercarte. Usa el joystick para moverte y arrastra para mirar alrededor."
   },
   "navigation": {
     "walkSpeed": 60,

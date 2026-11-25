@@ -406,6 +406,7 @@ function main(): void {
     panel = createStationPanel(el("station-dialog"), {
       baseUrl: BASE,
       videoElement: shared.element,
+      resetVideo: shared.reset,
       onPlay: () => void coordinator?.togglePlay(),
       onReplay: () => coordinator?.restartIntroduction(),
       onToggleMute: () => coordinator?.setMuted(!session.read().muted),

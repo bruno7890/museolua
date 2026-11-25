@@ -5,16 +5,16 @@ import { disableWebGL2, unlock } from "./helpers.ts";
 // y cada una abre el mismo panel de estación.
 
 const TITULOS = [
-  "Canción de demostración 01",
-  "Canción de demostración 02",
-  "Canción de demostración 03",
-  "Vídeo de demostración 04",
-  "Canción de demostración 05",
-  "Canción de demostración 06",
-  "Canción de demostración 07",
-  "Canción de demostración 08",
-  "Vídeo de demostración 09",
-  "Canción de demostración 10",
+  "Canción de Lua 01",
+  "Canción de Lua 02",
+  "Canción de Lua 03",
+  "Vídeo de Lua 04",
+  "Canción de Lua 05",
+  "Canción de Lua 06",
+  "Canción de Lua 07",
+  "Canción de Lua 08",
+  "Vídeo de Lua 09",
+  "Canción de Lua 10",
 ];
 
 const IDS = [

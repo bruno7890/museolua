@@ -25,6 +25,6 @@ test.describe("sin WebGL 2: catálogo accesible con las diez estaciones", () => 
     await page.locator('[data-station-id="estacion-04"]').click();
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText("Vídeo de demostración 04");
+    await expect(dialog).toContainText("Vídeo de Lua 04");
   });
 });

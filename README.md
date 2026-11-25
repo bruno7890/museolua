@@ -65,8 +65,8 @@ Dos reglas que conviene no romper:
 
 ## Estado
 
-- 151 pruebas unitarias y 50 pruebas E2E (25 por perfil de navegador) en verde.
-- Carga esencial de 2,23 MiB, sin audio ni vídeo hasta que se piden.
+- 157 pruebas unitarias y 52 pruebas E2E (26 por perfil de navegador) en verde.
+- Carga esencial de 2,36 MiB, sin audio ni vídeo hasta que se piden.
 - Pendiente de hardware Android real: voz del sistema, multitáctil, pantalla completa y FPS (`docs/qa.md`).
 
 ## Licencia

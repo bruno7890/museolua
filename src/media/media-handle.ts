@@ -39,6 +39,8 @@ export interface SharedVideo {
   /** Estación que tiene el elemento en este momento. */
   owner: () => string | null;
   setOwner: (id: string | null) => void;
+  /** Borra el fotograma anterior sin pedir el vídeo siguiente hasta que la visita lo reproduzca. */
+  reset: () => void;
 }
 
 export function createSharedVideo(element: HTMLVideoElement): SharedVideo {
@@ -48,6 +50,12 @@ export function createSharedVideo(element: HTMLVideoElement): SharedVideo {
     owner: () => owner,
     setOwner: (id) => {
       owner = id;
+    },
+    reset: () => {
+      element.pause();
+      element.removeAttribute("src");
+      element.load();
+      owner = null;
     },
   };
 }

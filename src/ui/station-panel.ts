@@ -12,6 +12,7 @@ export interface StationPanelOptions {
   onExpand: () => void;
   onClose: () => void;
   videoElement: HTMLVideoElement;
+  resetVideo: () => void;
 }
 
 export interface StationPanel {
@@ -89,6 +90,7 @@ export function createStationPanel(root: HTMLElement, opts: StationPanelOptions)
     open(station, snapshot) {
       current = station;
       lastFocus = root.ownerDocument.activeElement as HTMLElement | null;
+      opts.resetVideo();
       title.textContent = station.title;
       const isVideo = station.type === "video";
       image.hidden = isVideo;

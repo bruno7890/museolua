@@ -20,6 +20,9 @@ jobs:
     timeout-minutes: 20
 
     steps:
+      - name: Obtener el código
+        uses: actions/checkout@v4
+
       - name: Instalar Node
         uses: actions/setup-node@v4
         with:
